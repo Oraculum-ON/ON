@@ -1,0 +1,33 @@
+/*
+    Modulo de tratamento de textos
+    Componente do mini framework css ofCss! integrante do projeto
+    Oraculum Framework
+
+    http://oraculumframework.org/
+*/
+.u{
+  text-decoration:underline;
+}
+.b{
+    font-weight:bold;
+}
+.tcenter{
+    text-align:center;
+}
+.tleft{
+    text-align:left;
+}
+.tright{
+    text-align:right;
+}
+.center{
+    margin:auto;
+}
+.left{
+    float:left;
+    width:auto;
+}
+.right{
+    float:right;
+    width:auto;
+}

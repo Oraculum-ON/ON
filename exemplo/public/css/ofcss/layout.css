@@ -1,0 +1,124 @@
+/*
+    Modulo de auxilio no desenvolvimento de layouts
+    Componente do mini framework css ofCss! integrante do projeto
+    Oraculum Framework
+
+    http://oraculumframework.org/
+*/
+html,body{
+    width:100%;
+    height:100%;
+    margin:0px;
+    padding:0px;
+}
+/* Clear */
+.clear{
+    display:block;
+    clear:none;
+}
+/* Block */
+.block{
+    display:block;
+}
+/* Hide */
+.hide{
+    display:none;
+    visibility:hidden;
+}
+
+/* Horizontal Menu */
+.hmenu ul{
+    list-style-type:none;
+    margin:0px;
+    display:block;
+}
+.hmenu ul li{
+    float:left;
+    display:inline;
+    clear:none;
+    vertical-align:middle;
+    width:auto;
+}
+.hmenu ul li a{
+    display:block;
+    padding: 2px 5px;
+    text-decoration:none;
+}
+.hmenu ul li a:hover{
+    text-decoration:underline;
+}
+
+
+/* Vertical Menu */
+.vmenu ul{
+    list-style-type:none;
+    margin:0px;
+    display:block;
+}
+.vmenu ul li{
+    float:left;
+    vertical-align:middle;
+    width:auto;
+    clear:both;
+    display:block;
+}
+.vmenu ul li a{
+    display:block;
+    padding: 2px 5px;
+    text-decoration:none;
+    width:100%;
+}
+.vmenu ul li a:hover{
+    text-decoration:underline;
+    display:block;
+}
+
+#content .colauto{
+    width:auto;
+}
+
+#content .col10{
+    width:10%;
+}
+#content .col15{
+    width:15%;
+}
+#content .col20{
+    width:20%;
+}
+#content .col25{
+    width:25%;
+}
+#content .col30{
+    width:30%;
+}
+#content .col33{
+    width:33%;
+}
+#content .col40{
+    width:40%;
+}
+#content .col50{
+    width:50%;
+}
+#content .col60{
+    width:60%;
+}
+#content .col66{
+    width:66%;
+}
+#content .col70{
+    width:70%;
+}
+#content .col75{
+    width:75%;
+}
+#content .col80{
+    width:80%;
+}
+#content .col90{
+    width:90%;
+}
+#content .col100{
+    width:100%;
+}

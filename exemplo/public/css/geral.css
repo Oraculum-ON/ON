@@ -1,0 +1,60 @@
+/*
+    Oraculum Framework
+    http://oraculumframework.org/
+*/
+@charset "UTF-8";
+@import url('./ofcss/layout.css');
+@import url('./ofcss/text.css');
+@import url('./ofcss/dev.css');
+@import url('./menu.css');
+/* Nas linhas acima sao incluidos modulos do mini framework css ofCss! */
+body{
+  background-image:none;
+  text-align:center;
+  font-family:Verdana,Tahoma,Arial;
+}
+a{
+    color:#66f;
+    font-weight:bold;
+}
+p{
+  font-size:100%;
+  text-align:left;
+  width:80%;
+  margin:auto;
+}
+#logo{
+  margin:auto;
+  display:block;
+  clear:both;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+em.test{
+  font-size:22px;
+}
+h2.test{
+  font-weight:normal;
+  font-size:100%;
+}
+
+#content{
+  width:90%;
+  margin:auto;
+}
+#footer{
+  font-family:Verdana,Tahoma,Arial;
+  color:#aaa;
+  font-size:12px;
+  margin-top:100px;
+}
+#erro{
+  text-align:left;
+  width:80%;
+  border-top:1px solid #00a;
+  margin:auto;
+  padding:0px 50px;
+}
+.class{
+    text-align:left;
+}

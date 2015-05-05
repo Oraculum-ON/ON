@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Determina a base de reescrita
+  RewriteBase /ON/exemplo
+  # Verifica se a url nao corresponde a um arquivo existente
+  RewriteCond %{REQUEST_FILENAME} !-f
+  # Verifica se a url nao corresponde a um diretorio existente
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule .([a-zA-Z0-9]+)?$ index.php
+</IfModule>

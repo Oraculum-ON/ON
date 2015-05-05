@@ -1,0 +1,76 @@
+
+#topmenu{
+    position:relative;
+    clear:both;
+    height:30px;
+    line-height:30px;
+    width:100%;
+    background-color:#e4f6fb;
+    z-index:5;
+}
+#topmenu ul{
+    width:1000px;
+    margin:auto;
+}
+#topmenu ul li{
+    position:relative;
+    padding-right:30px;
+    height:30px;
+    line-height:30px;
+}
+#topmenu ul ul{
+    position:absolute;
+    display:none;
+    float:left;
+    clear:both;
+    width:200px;
+    top:30px;
+    left:0px;
+    padding:0px;
+    margin:0px;
+    background-color:#003298;
+    background-color:#43adea;
+    background-color:#3099d5;
+    background-color:#43adea;
+    border:1px solid #e4f6fb;
+    border-top:none;
+    overflow:hidden;
+    margin-left:-1px;
+}
+#topmenu ul ul li{
+    float:left;
+    clear:both;
+    padding:0px;
+    margin:0px;
+    width:100%;
+    display:block;
+    height:20px;
+    line-height:20px;
+}
+#topmenu a{
+    display:block;
+    width:100%;
+    padding:0 5px;
+    text-decoration:none;
+    color:#003298;
+}
+#topmenu ul ul a{
+    color:#fff;
+    text-align:left;
+    font-weight:normal;
+}
+#topmenu a:hover{
+    background-color:#43adea;
+    color:#fff;
+}
+#topmenu li:hover ul{
+    display:block;
+}
+#topmenu ul ul a:hover{
+    background-color:#678abc;
+    color:#fff;
+}
+#topmenu li:hover,#topmenu li:hover a,#topmenu a:hover{
+    background-color:#43adea;
+    color:#fff;
+}

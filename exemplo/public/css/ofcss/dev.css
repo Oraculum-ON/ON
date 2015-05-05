@@ -1,0 +1,29 @@
+/*
+    Modulo de auxilio no momento de desenvolvimento e testes de layouts
+    Componente do mini framework css ofCss! integrante do projeto
+    Oraculum Framework
+
+    http://oraculumframework.org/
+*/
+body.dev{
+    background-repeat:no-repeat;
+    background-position:50% 0%;
+}
+body.bkgjpg{
+    background-image:url('../../img/layout.jpg');
+}
+body.bkgpng{
+    background-image:url('../../img/layout.png');
+}
+.debug,.debug *{
+    border:1px dotted #444;
+}
+.debug1,.debug1 *{
+    border:1px solid #0f0 !important;
+}
+.debug2,.debug2 *{
+    border:1px solid #f00;
+}
+.debug3,.debug3 *{
+    border:1px solid #00f;
+}
