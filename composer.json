@@ -1,4 +1,10 @@
 {
+    "name": "patrix/ON",
+    "type": "library",
+    "description": "ON Framework",
+    "keywords": ["on","framework"],
+    "homepage": "https://github.com/patrix/ON",
+    "license": "LGPL",
     "authors": [
         {
             "name": "Patrick Kaminski",
