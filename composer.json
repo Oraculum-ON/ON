@@ -1,0 +1,11 @@
+{
+    "authors": [
+        {
+            "name": "Patrick Kaminski",
+            "email": "patrix.sbs+composer@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    }
+}
