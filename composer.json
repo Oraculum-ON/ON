@@ -1,9 +1,9 @@
 {
-    "name": "patrix/on",
+    "name": "phpon/on",
     "type": "library",
     "description": "ON Framework",
     "keywords": ["on","framework"],
-    "homepage": "https://github.com/patrix/ON",
+    "homepage": "https://github.com/phpON/ON",
     "license": "LGPL",
     "authors": [
         {
@@ -13,5 +13,8 @@
     ],
     "require": {
         "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-4": {"ON\\": "ON/core"}
     }
 }
