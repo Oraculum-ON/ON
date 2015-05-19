@@ -4,7 +4,7 @@
 	class Adds {
 		public static function load($plugin) {
 			$plugin=strtolower($plugin);
-			$arquivo=PATH.'adds/'.$plugin.'.php';
+			$arquivo=dirname(__FILE__).'/../adds/'.$plugin.'.php';
 			if(file_exists($arquivo)):
 			  include_once($arquivo);
 			else:

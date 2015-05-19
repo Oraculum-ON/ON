@@ -5,7 +5,7 @@
     {		
         public function __construct()
         {
-            header('X-Powered-By: Oraculum PHP Framework');
+            header('X-Powered-By: ON Framework');
 			App::checkDebug();
         }
         
