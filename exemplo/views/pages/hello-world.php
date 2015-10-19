@@ -1,6 +1,5 @@
 <?php
-	Oraculum::Load('Register');
-	Oraculum_Register::set('titulo', 'Suporte');
+	ON\Register::set('titulo', 'Suporte');
  ?>
 <div id="content">
     <h1>Hello World</h1>
