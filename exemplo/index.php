@@ -3,7 +3,7 @@
 
     use ON\ON;
 
-	$app=ON::App();
+    $app=ON::App();
     $app->start()
         ->setBaseUrl('/ON/exemplo/') // Define qual a URL base
         ->setDefaultPage('home') // Define qual a pagina padrao

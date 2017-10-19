@@ -3,6 +3,6 @@
     use ON\App;
 
     Register::set('titulo', 'Primeiros Passos');
-	App::loadView()
+    App::loadView()
  	    ->addTemplate('geral')
  	    ->loadPage('primeiros-passos');

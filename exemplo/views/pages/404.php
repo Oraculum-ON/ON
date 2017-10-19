@@ -8,7 +8,6 @@
 		inicializacao), ou nos controladores.
 		O motivo de estar aqui e' apenas para demonstracao.
 	*/
-	Oraculum::Load('Register');
 	
 	/*
 		A classe Oraculum_Register serve para registrar variaveis
@@ -16,7 +15,7 @@
 		Para definir: Oraculum_Register::set('variavel', 'valor');
 		Para recuperar: Oraculum_Register::get('variavel');
 	*/
-	Oraculum_Register::set('titulo', 'Erro 404 - P&aacute;gina n&atilde;o encontrada');
+	ON\Register::set('titulo', 'Erro 404 - P&aacute;gina n&atilde;o encontrada');
  ?>
 <div id="erro">
 <h1>A p&aacute;gina n&atilde;o pode ser encontrada ;-(</h1>
@@ -44,5 +43,4 @@
     <a href="<?php echo URL; ?>">Acesse a p&aacute;gina inicial e procure as informa&ccedil;&otilde;es que deseja.</a>
   </li>
 </ul>
-</div>
 </div>

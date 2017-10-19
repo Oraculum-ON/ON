@@ -1,18 +1,20 @@
 {
-    "name": "phpon/on",
+    "name": "Oraculum-ON/ON",
     "type": "library",
-    "description": "ON Framework",
+    "description": "ON Framework, Simple MVC PHP Framework",
     "keywords": ["on","framework"],
-    "homepage": "https://github.com/phpON/ON",
-    "license": "LGPL",
+    "homepage": "https://oraculum-on.github.io",
+    "license": "LGPL-3.0",
     "authors": [
         {
             "name": "Patrick Kaminski",
-            "email": "patrix.sbs+composer@gmail.com"
+            "email": "patrix.sbs@gmail.com",
+			"homepage": "http://patrickkaminski.com",
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "phpmailer/phpmailer": "^5.2"
     },
     "autoload": {
         "psr-4": {"ON\\": "ON/core"}
