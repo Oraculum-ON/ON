@@ -1,9 +1,9 @@
 <?php
-/******************************************************
- * Arquivo apenas para instruções caso o Apache
- * não esteja com o Módulo Rewrite Ativo!
- ******************************************************/
-	define('URL', './');
+    /******************************************************
+    * Arquivo apenas para instruções caso o Apache
+    * não esteja com o Módulo Rewrite Ativo!
+    ******************************************************/
+    define('URL', './');
 ?>
 <!DOCTYPE html>
 <html>
@@ -39,4 +39,4 @@ Acesse novamente o link <strong>Primeiros Passos</strong> dispon&iacute;vel no m
 </p>
 </div>
 <?php
-	include('views/elements/footer.php');
+    include('views/elements/footer.php');

@@ -42,7 +42,7 @@
                                 '@'.$servidor.'/'.$base);
                 endif;
 				$db->PDO();
-				$dbo=new DBO();
+				$dbo=new DBO(null);
                 if ($banco != 'sqlite'):
 				    DBO::execSQL('USE '.$base.';');
 				    $query=DBO::execSQL('SHOW KEYS FROM '.$tabela.
