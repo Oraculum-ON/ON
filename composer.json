@@ -1,6 +1,5 @@
 {
     "name": "Oraculum-ON/ON",
-    "type": "library",
     "description": "ON Framework, Simple MVC PHP Framework",
     "keywords": ["on","framework"],
     "homepage": "https://oraculum-on.github.io",
@@ -9,7 +8,7 @@
         {
             "name": "Patrick Kaminski",
             "email": "patrix.sbs@gmail.com",
-			"homepage": "http://patrickkaminski.com",
+			"homepage": "http://patrickkaminski.com"
         }
     ],
     "require": {
