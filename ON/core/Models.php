@@ -32,7 +32,7 @@
                 else:
                     throw new Exception('[Error '.__METHOD__.'] Modelo nao encontrado ('.$modelfile.') ');
                 endif;
-                if($this->_dsntype==2):
+                if($this->_dsntype==1):
                     $dsn=preg_split('[://|:|@|/]', $this->_dsn);
                     $this->_driver=strtolower($dsn[0]);
                     if ($this->_driver=='sqlite'):

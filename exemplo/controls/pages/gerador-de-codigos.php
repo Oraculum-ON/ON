@@ -23,11 +23,11 @@
 		if ($base!=''):
             if ($banco == 'sqlite'):
                 $model='<'.'?'.'php'.NL;
-                $model.="\t".'$this->_dsntype=1;'.NL;
+                //$model.="\t".'$this->_dsntype=1;'.NL;
                 $model.="\t".'$this->_dsn=\''.$banco.':'.$base.'\';';
             else:
                 $model='<'.'?'.'php'.NL;
-                $model.="\t".'$this->_dsntype=1;'.NL;
+                //$model.="\t".'$this->_dsntype=1;'.NL;
                 $model.="\t".'$this->_dsn=\''.$banco.'://'.$usuario;
                 $model.=':'.$senha.'@'.$servidor.'/'.$base.'\';';
             endif;
@@ -95,7 +95,7 @@
 							"\t".'// Carrega todos os registros da tabela/entidade'.NL.
 							"\t".'$regs=$tb->getAll();'.NL.
 							"\t".'// Cria uma instancia de do plugin Datagrid'.NL.
-							"\t".'$grid=new Datagrid($regs);'.NL.NL.
+							"\t".'$grid=new ON\Datagrid($regs);'.NL.NL.
 							"\t".'// Define a classe CSS da tabela'.NL.
 							"\t".'$grid->setTableClass(\'table table-bordered table-striped\');'.NL.
 							"\t".'// Define a classe CSS do botao de atualizacao'.NL.
@@ -163,7 +163,7 @@
 							"\t\t".'->loadPage(\''.$arquivo.'-listar\'); // Carrega a view de listagem'.NL.
 							'endif;';
 							
-				$viewlistar='<'.'?'.'php $grid=Register::get(\'grid\'); ?'.'>'."\n\r".
+				$viewlistar='<'.'?'.'php $grid=ON\Register::get(\'grid\'); ?'.'>'."\n\r".
 							'<'.'?'.'php echo $grid; ?'.'>';
 			
 				Register::set('model', $model);

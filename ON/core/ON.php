@@ -44,8 +44,10 @@
 			$instance=self::getInstance();
 			return new App();
 		}
-		public static function ApiApp()
-        {
-			
+		
+		public static function CliApp()
+		{
+			$instance=self::getInstance();
+			return new CliApp();
 		}
 	}

@@ -28,7 +28,7 @@
         {
 			$host=isset($_SERVER['REMOTE_HOST'])?$_SERVER['REMOTE_HOST']:null;
 			if ((is_null($host))||($host=='')) {
-				$host=Oraculum_HTTP::ip();
+				$host=HTTP::ip();
 			}
 			return $host;
 		}
