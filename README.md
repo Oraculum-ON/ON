@@ -1,4 +1,10 @@
-#Oraculum::ON!
+[![Build Status](https://travis-ci.org/Oraculum-ON/ON.svg?branch=dev)](https://travis-ci.org/Oraculum-ON/ON)
+[![Latest Stable Version](https://poser.pugx.org/oraculum-on/on/v/stable)](https://packagist.org/packages/oraculum-on/on)
+[![Latest Unstable Version](https://poser.pugx.org/oraculum-on/on/v/unstable)](https://packagist.org/packages/oraculum-on/on)
+[![License](https://poser.pugx.org/oraculum-on/on/license)](https://packagist.org/packages/oraculum-on/on)
+
+
+# Oraculum::ON!
 Olá,
 você deve estar se perguntando... O que seria o projeto ON???
 
@@ -9,8 +15,9 @@ Na verdade Oraculum::ON é uma plataforma criada com base no projeto **Oraculum 
 Além no nome, surgiram novos objetivos como...
  - Oferecer uma plataforma capaz de auxiliar no desenvolvimento de aplicações para QUALQUER tipo de plataforma.
  - Facilitar ainda mais o desenvolvimento de aplicações.
- - Melhoria na documentação.
+ - Melhoria na [**documentação**](https://github.com/Oraculum-ON/ON/wiki)!
  - Maior integração da comunidade.
 
 ### Turn On!
-Patrick Kaminski
+
+[**Patrick Kaminski**](https://patrickkaminski.com)
