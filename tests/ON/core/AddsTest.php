@@ -13,4 +13,10 @@ class AddsTest extends TestCase
         }
         $this->assertTrue(true);
     }
+	
+    public function testLoadError()
+    {
+		$this->expectException(ON\Exception::class);
+        Adds::load('not-found');
+    }
 }
