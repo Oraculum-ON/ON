@@ -1,7 +1,8 @@
 <?php
 	use ON\ON;
+	use PHPUnit\Framework\TestCase;
 	
-    class ONTest extends PHPUnit_Framework_TestCase
+    class ONTest extends TestCase
     {		
 		public function testApp()
         {

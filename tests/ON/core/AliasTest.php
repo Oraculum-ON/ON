@@ -1,7 +1,8 @@
 <?php
 	use ON\Alias;
+	use PHPUnit\Framework\TestCase;
 
-	class AliasTest extends PHPUnit_Framework_TestCase
+	class AliasTest extends TestCase
 	{
 		public function testAddAlias()
         {

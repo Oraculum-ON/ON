@@ -1,7 +1,8 @@
 <?php
 	use ON\Routes;
+	use PHPUnit\Framework\TestCase;
 	
-	class RoutesTest extends PHPUnit_Framework_TestCase
+	class RoutesTest extends TestCase
     {
 		public function testAdd() {
 			$_SERVER['REQUEST_URI']='http://localhost/origem/teste';

@@ -1,7 +1,9 @@
 <?php
 	use ON\Adds;
+	use PHPUnit\Framework\TestCase;
 	
-	class AddsTest extends PHPUnit_Framework_TestCase {
+	class AddsTest extends TestCase
+	{
 		public function testLoad() {
 			try {
 				Adds::load('datagrid');

@@ -1,7 +1,8 @@
 <?php
 	use ON\Request;
+	use PHPUnit\Framework\TestCase;
 
-	class RequestTest extends PHPUnit_Framework_TestCase
+	class RequestTest extends TestCase
 	{
 		public function testDefineTmpDir()
         {
@@ -100,13 +101,6 @@
 				$this->fail();
 			}
 			$this->assertTrue(TRUE);
-		}
-
-		public function testSetCookie()
-        {
-			//Request::setCookie('getSess', 'testSetSess');
-			//$result=$_COOKIE['getSess'];
-			//$this->assertEquals('testSetSess', $result);
 		}
 
 		public function testGetCookie()

@@ -1,7 +1,8 @@
 <?php
 	use ON\Crypt;
+	use PHPUnit\Framework\TestCase;
 	
-	class CryptTest extends PHPUnit_Framework_TestCase
+	class CryptTest extends TestCase
     {
 		public function testCrypt(){
 			$str=Crypt::strCrypt('testCrypt');
@@ -16,7 +17,7 @@
 		}
 		
 		public function testBlowfishCusto(){
-			$str=Crypt::blowfish('testBlowfish2', 55);
+			$str=Crypt::blowfish('testBlowfish2', 13);
 			$result=Crypt::blowfishCheck('testBlowfish2', $str);
 			$this->assertTrue($result);
 		}

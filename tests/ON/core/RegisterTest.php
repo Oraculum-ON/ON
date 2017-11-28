@@ -1,7 +1,8 @@
 <?php
 	use ON\Register;
+	use PHPUnit\Framework\TestCase;
 
-	class RegisterTest extends PHPUnit_Framework_TestCase
+	class RegisterTest extends TestCase
     {
 		public function testRegister(){
 			Register::set('variavel', 'testeunitario');

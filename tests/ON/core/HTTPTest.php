@@ -1,15 +1,10 @@
 <?php
 	use ON\HTTP;
+	use PHPUnit\Framework\TestCase;
 
-	class HTTPTest extends PHPUnit_Framework_TestCase
+	class HTTPTest extends TestCase
     {
-		public function testRedirect()
-        {
-			//$result = HTTP::redirect('testRedirect');
-			//$this->assertContains('Location: testRedirect', xdebug_get_headers());
-		}
 
-		// Capturar endereco IP
 		public function testIp()
         {
 			$_SERVER['REMOTE_ADDR']='testIP';
@@ -17,7 +12,6 @@
 			$this->assertEquals($_SERVER['REMOTE_ADDR'], $result);
 		}
 
-		// Capturar HOST
 		public function testHost()
         {
 			$_SERVER['REMOTE_HOST']='testHost';
@@ -25,7 +19,6 @@
 			$this->assertEquals($_SERVER['REMOTE_HOST'], $result);
 		}
 
-		// Capturar Request URL
 		public function testReferer()
         {
 			$_SERVER['HTTP_REFERER']='testReferer';

@@ -1,7 +1,8 @@
 <?php
 	use ON\Start;
+	use PHPUnit\Framework\TestCase;
 
-    class StartTest extends PHPUnit_Framework_TestCase
+    class StartTest extends TestCase
     {
 		public function testStart(){
 			try {
