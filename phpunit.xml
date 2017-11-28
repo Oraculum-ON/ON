@@ -17,7 +17,7 @@
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">./ON/</directory>
+            <directory suffix=".php">./ON/core/</directory>
         </whitelist>
     </filter>
 </phpunit>
