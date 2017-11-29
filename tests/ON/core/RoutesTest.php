@@ -11,4 +11,10 @@ class RoutesTest extends TestCase
         $result = $_SERVER['REQUEST_URI'];
         $this->assertEquals('http://localhost/destino/teste', $result);
     }
+
+    public function testConstruct()
+    {
+        $this->expectException('Error');
+        $result=new Routes();
+    }
 }

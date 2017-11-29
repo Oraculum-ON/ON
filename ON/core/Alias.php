@@ -11,8 +11,10 @@ namespace ON;
         public static function addAlias($newfunction, $originalfunction)
         {
             if (function_exists($newfunction)):
-                throw new Exception('[Error '.__METHOD__.'] A funcao \''.$newfunction.'\' ja existe'); elseif (!is_callable($originalfunction)):
-                throw new Exception('[Error '.__METHOD__.'] A funcao \''.$originalfunction.'\' nao pode ser chamada'); else:
+                throw new Exception('[Error '.__METHOD__.'] A funcao \''.$newfunction.'\' ja existe');
+			elseif (!is_callable($originalfunction)):
+                throw new Exception('[Error '.__METHOD__.'] A funcao \''.$originalfunction.'\' nao pode ser chamada');
+			else:
                 eval('function '.$newfunction.'() {
 					$args=func_get_args();
 					return call_user_func_array(\''.$originalfunction.'\',$args);
@@ -45,8 +47,8 @@ namespace ON;
                 /**********************************
                 * Tratamento de criptografia
                 **********************************/
-                self::AddAlias('strcrypt', 'ON\Crypt::strcrypt');
-            self::AddAlias('strdcrypt', 'ON\Crypt::strdcrypt');
+                self::AddAlias('strcrypt', 'ON\Crypt::strCrypt');
+            self::AddAlias('strdecrypt', 'ON\Crypt::strDecrypt');
             self::AddAlias('blowfish', 'ON\Crypt::blowfish');
             self::AddAlias('blowfishcheck', 'ON\Crypt::blowfishcheck');
             endif;
@@ -57,14 +59,6 @@ namespace ON;
                 self::AddAlias('redirect', 'ON\HTTP::redirect');
             self::AddAlias('ip', 'ON\HTTP::ip');
             self::AddAlias('host', 'ON\HTTP::host');
-            endif;
-            if (($class == 'Validate') || ($class == 'All')):
-                /**********************************
-                * Tratamento de formularios
-                **********************************/
-                self::AddAlias('validar', 'ON\Validate::validar');
-            self::AddAlias('verificaCPF', 'ON\Validate::verificaCPF');
-            self::AddAlias('verificaEmail', 'ON\Validate::verificaEmail');
             endif;
             if (($class == 'Text') || ($class == 'All')):
                 /**********************************

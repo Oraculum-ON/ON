@@ -4,11 +4,17 @@ use PHPUnit\Framework\TestCase;
 
 class HTTPTest extends TestCase
 {
+	/*public function testRedirect()
+	{
+		//$result = HTTP::redirect('testRedirect');
+		//$this->assertContains('Location: testRedirect', xdebug_get_headers());
+	}*/
+
     public function testIp()
     {
         $_SERVER['REMOTE_ADDR'] = 'testIP';
         $result = HTTP::ip();
-        $this->assertEquals($_SERVER['REMOTE_ADDR'], $result);
+        $this->assertEquals('testIP', $result);
     }
 
     public function testHost()
@@ -16,6 +22,14 @@ class HTTPTest extends TestCase
         $_SERVER['REMOTE_HOST'] = 'testHost';
         $result = HTTP::host();
         $this->assertEquals($_SERVER['REMOTE_HOST'], $result);
+    }
+	
+    public function testHostNull()
+    {
+        $_SERVER['REMOTE_ADDR'] = 'testIP';
+        $_SERVER['REMOTE_HOST'] = '';
+        $result = HTTP::host();
+        $this->assertEquals('testIP', $result);
     }
 
     public function testReferer()

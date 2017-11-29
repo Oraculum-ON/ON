@@ -11,7 +11,7 @@ class Files
               include_once $file;
 
         return true; else:
-              if (defined(DEBUG)):
+              if (defined('DEBUG')):
                 alert('Arquivo <u>'.$file.'</u> nao encontrado');
         endif;
 

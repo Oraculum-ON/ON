@@ -1,5 +1,5 @@
 <?php
-    use ON\Alias;
+use ON\Alias;
 use PHPUnit\Framework\TestCase;
 
 class AliasTest extends TestCase
@@ -14,10 +14,23 @@ class AliasTest extends TestCase
     public function testLoadAlias()
     {
         try {
-            Alias::loadAlias('Logs');
+            Alias::loadAlias('All');
         } catch (InvalidArgumentException $notExpected) {
             $this->fail();
         }
         $this->assertTrue(true);
+    }
+    
+    public function testAddAliasError()
+    {
+        $this->expectException('ON\Exception');
+        Alias::addAlias('b64encode2', 'testAddAliasError');
+    }
+    
+    public function testAddAliasDuplicate()
+    {
+        $this->expectException('ON\Exception');
+        Alias::addAlias('alert', 'ON\Logs::alert');
+        Alias::addAlias('alert', 'ON\Logs::alert');
     }
 }
