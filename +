@@ -10,7 +10,7 @@
 	$install=static function($plugin) {
 		echo 'Baixando '.$plugin.'!'."\n";
 		$addDir = 'ON'.DS.'adds'.DS;
-		$url = 'https://raw.githubusercontent.com/Oraculum-ON/ON/master/ON/adds/'.$plugin.'.php';
+		$url = 'https://raw.githubusercontent.com/Oraculum-ON/Adds/master/adds/'.$plugin.'.php';
 		$name= basename($url);
 		$content = file_get_contents($url);
 		if ((bool)$content):
@@ -22,7 +22,7 @@
     };
 	$list=static function() {
 		echo 'Carregando lista...'."\n";
-		$url = 'https://raw.githubusercontent.com/Oraculum-ON/ON/master/ON/adds/datagrid.php';
+		$url = 'https://raw.githubusercontent.com/Oraculum-ON/Adds/master/adds/list.txt';
 		$name= basename($url);
 		$content = file_get_contents($url);
 		if ((bool)$content):
