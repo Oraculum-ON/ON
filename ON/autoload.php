@@ -14,7 +14,7 @@
             return;
         endif;
         $class = str_replace('ON\\', '', $class);
-        $classfile = PATH.'core\\'.$class.'.php';
+		$classfile = PATH.'core'.DS.$class.'.php';
         if (file_exists($classfile)):
             include_once $classfile; else:
             //throw new Exception('[Error autoload] File not found ('.$classfile.')');
