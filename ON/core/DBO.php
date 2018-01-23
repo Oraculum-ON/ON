@@ -52,9 +52,10 @@ class DBO extends Models
         $this->execSQL('rollback');
     }
 
-    public static function dados($query)
+    public function dados($query)
     {
-        return $query->fetchAll();
+        $rows=$this->execSQL($query);
+        return $this->fetch($rows);
     }
 
     public function linhas($query)

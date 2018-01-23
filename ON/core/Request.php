@@ -18,7 +18,7 @@ class Request
                 $valor = $_POST[$indice];
         if ($tipo != 'h'):
                     $valor = strip_tags($valor);
-        $valor = htmlentities($valor, ENT_SUBSTITUTE, 'ISO-8859-1'); elseif ($tipo == 'n'):
+        $valor = htmlentities($valor, ENT_SUBSTITUTE, 'utf-8'); elseif ($tipo == 'n'):
                     $valor = floor($valor);
         if ($valor == 0):
                         $valor = null;
@@ -38,7 +38,7 @@ class Request
                 $valor = null;
         endif;
         $valor = strip_tags($valor);
-        $valor = htmlentities($valor, ENT_SUBSTITUTE, 'ISO-8859-1');
+        $valor = htmlentities($valor, ENT_SUBSTITUTE, 'utf-8');
         $valor = addslashes($valor);
         if ($tipo == 'n'):
                 $valor = floor($valor);
@@ -236,6 +236,15 @@ class Request
         $gets = explode('/', str_replace('?', '/', $request));
 
         return $gets;
+    }
+    
+    public static function getAction()
+    {
+        if (defined('ACTION_URL')):
+            return explode('/', str_replace('?', '/', ACTION_URL));
+        else:
+            return self::gets();
+        endif;
     }
 
     public static function request()

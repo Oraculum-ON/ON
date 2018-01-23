@@ -2,19 +2,25 @@
 
 namespace ON;
 
-class Views
+class View
 {
     protected $_viewsRegister = null;
     protected $_template = null;
     protected $_templatetype = 'xml';
     protected $_pagefile = null;
 
-    public function __construct()
+    public function __construct($view = null, $template = null)
     {
         if (!defined('VIEW_DIR')):
                 define('VIEW_DIR', 'views');
         endif;
         $this->_viewsRegister = new ViewsRegister();
+		if (!is_null($view)):
+			if (!is_null($template)):
+				$this->addTemplate($template);
+			endif;
+			$this->loadPage($view);
+		endif;
     }
 
     public function addTemplate($template = null)

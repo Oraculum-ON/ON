@@ -10,9 +10,9 @@ class App
         self::checkDebug();
     }
 
-    public static function loadView()
+    public static function loadView($view = null, $template = null)
     {
-        return new Views();
+        return new View($view, $template);
     }
 
     public static function loadControl()
@@ -27,7 +27,7 @@ class App
 
     public function view()
     {
-        return new Views();
+        return new View();
     }
 
     public function control()
@@ -67,9 +67,9 @@ class App
         }
     }
 
-    public function start()
+    public function frontController()
     {
-        return new Start();
+        return new FrontController();
     }
 
     public static function checkDebug()
