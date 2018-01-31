@@ -3,7 +3,7 @@
     "description": "ON Framework, Simple MVC PHP Framework",
     "keywords": ["on","framework"],
     "homepage": "https://oraculum-on.github.io",
-    "license": "LGPL-3.0",
+    "license": "LGPL-3.0-only",
     "authors": [
         {
             "name": "Patrick Kaminski",
@@ -16,7 +16,7 @@
         "phpmailer/phpmailer": "^5.2"
     },
     "autoload": {
-        "psr-4": {"ON\\": "ON/core"}
+        "psr-4": {"Oraculum\\": "Oraculum/core"}
     },
     "require-dev": {
         "phpunit/phpunit": "*"
