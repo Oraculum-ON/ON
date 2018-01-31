@@ -1,28 +1,21 @@
 <?php
 
-namespace ON;
+namespace Oraculum;
 
-class HTTP
+class Http
 {
     // Redirecionar
     public static function redirect($url)
     {
-        if (isset($url)):
-                header('Location: '.$url);
-        // Usa javascript caso falhe o redirecionamento por cabecalho
-        echo '<script type="text/javascript">';
-        echo '  document.location.href=\''.$url.'\';';
-        echo '</script>';
-        exit;
+        if (isset($url)) :
+            header('Location: '.$url);
         endif;
     }
 
     // Capturar endereco IP
     public static function ip()
     {
-        $ip = $_SERVER['REMOTE_ADDR'];
-
-        return $ip;
+        return $_SERVER['REMOTE_ADDR'];
     }
 
     // Capturar HOST

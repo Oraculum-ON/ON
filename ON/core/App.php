@@ -1,6 +1,6 @@
 <?php
 
-namespace ON;
+namespace Oraculum;
 
 class App
 {
@@ -17,12 +17,12 @@ class App
 
     public static function loadControl()
     {
-        return new Controls();
+        return new Control();
     }
 
     public static function loadModel($model)
     {
-        return new Models($model);
+        return new Model($model);
     }
 
     public function view()
@@ -32,15 +32,15 @@ class App
 
     public function control()
     {
-        return new Controls();
+        return new Control();
     }
 
     public function model()
     {
-        return new Models();
+        return new Model();
     }
 
-    public function setControlsDir($dir)
+    public function setControlDir($dir)
     {
         if (file_exists($dir)) {
             define('CONTROL_DIR', $dir);
@@ -49,7 +49,7 @@ class App
         }
     }
 
-    public function setViewsDir($dir)
+    public function setViewDir($dir)
     {
         if (file_exists($dir)) {
             define('VIEW_DIR', $dir);
@@ -58,13 +58,13 @@ class App
         }
     }
 
-    public function setModelsDir($dir)
+    public function setModelDir($dir)
     {
-        if (file_exists($dir)) {
+        if (file_exists($dir)) :
             define('MODEL_DIR', $dir);
-        } else {
-            throw new Exception('[[Error '.__METHOD__.'] ] Diretorio nao encontrado ('.$dir.')');
-        }
+        else :
+            throw new Exception('[Error '.__METHOD__.'] Diretorio nao encontrado ('.$dir.')');
+        endif;
     }
 
     public function frontController()
@@ -74,10 +74,11 @@ class App
 
     public static function checkDebug()
     {
-        if ((defined('ON_DEBUG')) && (ON_DEBUG)):
-                Exception::displayErrors();
-        Exception::start(); else:
-                ini_set('display_errors', false);
+        if ((defined('ON_DEBUG')) && (ON_DEBUG)) :
+            Exception::displayErrors();
+            Exception::start();
+        else :
+            ini_set('display_errors', false);
         endif;
     }
 }

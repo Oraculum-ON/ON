@@ -1,11 +1,10 @@
 <?php
 
-namespace ON;
+namespace Oraculum;
 
 class FrontController
 {
-    private $_defaulturl = null;
-    private $_errorpage = null;
+    private $defaulturl = null;
 
     public function __construct()
     {
@@ -13,16 +12,14 @@ class FrontController
 
     public function setBaseUrl($url)
     {
-        if (!defined('URL')):
-                define('URL', $url);
-        $gets = Request::gets();
-        $base = count(explode('/', URL));
-		if ($base > 1):
-			$base = $base - 2;
-		endif;
-        $base = (count(explode('/', URL)) - 2);
-        $base = strpos($gets[$base], '.php') ? $base + 2 : $base;
-        define('BASE', $base);
+        if (!defined('URL')) :
+			define('URL', $url);
+            $gets = Request::gets();
+            $base = count(explode('/', URL));
+			$base = (($base > 1) ? ($base - 2) : $base);
+            $base = (count(explode('/', URL)) - 2);
+            $base = (strpos($gets[$base], '.php') ? $base + 2 : $base);
+            define('BASE', $base);
         endif;
 
         return $this;
@@ -30,15 +27,15 @@ class FrontController
 
     public function setDefaultPage($url)
     {
-        $this->_defaulturl = $url;
+        $this->defaulturl = $url;
 
         return $this;
     }
 
     public function setErrorPage($url)
     {
-        if (!defined('ERRORPAGE')):
-                define('ERRORPAGE', $url);
+        if (!defined('ERROR_PAGE')) :
+                define('ERROR_PAGE', $url);
         endif;
 
         return $this;
@@ -47,58 +44,25 @@ class FrontController
     public function start()
     {
         $request = Request::request();
-        if((URL != '') && (URL != '/')):
+        if ((URL != '') && (URL != '/')) :
             $url = str_ireplace(URL, '', $request);
-        else:
+        else :
             $url = $request;
         endif;
-        if (!defined('ACTION_URL')):
+        if (!defined('ACTION_URL')) :
             define('ACTION_URL', $url);
         endif;
         
         $action = Request::getAction();
         $gets = Request::gets();
-        if (isset($gets[(BASE) + 1])):
-            $page = $gets[(BASE) + 1]; else:
-            $page = $this->_defaulturl;
+        if (isset($gets[(BASE) + 1])) :
+            $page = $gets[(BASE) + 1];
+        else :
+			$page = $this->defaulturl;
         endif;
-        if ($action == ''):
-                $action = $this->_defaulturl;
+        if ($page == '') :
+            $page = $this->defaulturl;
         endif;
-        if ($page == ''):
-                $page = $this->_defaulturl;
-        endif;
-        App::loadControl()->loadPage($page, $url);
+		App::loadControl()->loadPage($page, $url);
     }
-
-
-		public function setBaseUrlOld($url) {
-			if (!defined('URL')):
-				define('URL', $url);
-				$gets=Request::gets();
-				$base=(count(explode('/', URL))-2);
-				$base=strpos($gets[$base], '.php')?$base+2:$base;
-				define('BASE', $base);
-			endif;
-			return $this;
-		}
-		public function startOld() {
-			//Oraculum::Load('Request');
-			$request=Request::request();
-			$url=str_ireplace(URL, '', $request);
-			$gets=Request::gets();
-			if(isset($gets[(BASE)+1])):
-				$page=$gets[(BASE)+1];
-			else:
-				$page=$this->_defaulturl;
-				//throw new Exception('[Erro CGFC36] Nao foi possivel determinar a pagina atraves da URL');
-			endif;
-			if($url==''):
-				$url=$this->_defaulturl;
-			endif;
-			if($page==''):
-				$page=$this->_defaulturl;
-			endif;
-			App::loadControl()->loadPage($page, $url);
-		}
 }

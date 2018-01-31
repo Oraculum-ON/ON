@@ -1,47 +1,47 @@
 <?php
 
-namespace ON;
+namespace Oraculum;
 
 class Register
 {
-    private $_vars = [];
-    private static $_instance = null;
+    private $vars = [];
+    private static $instance = null;
 
     public static function getInstance()
     {
-        if (is_null(self::$_instance)):
-                self::setInstance(new self());
+        if (is_null(self::$instance)) :
+            self::setInstance(new self());
         endif;
 
-        return self::$_instance;
+        return self::$instance;
     }
 
     public static function setInstance(self $instance)
     {
-        self::$_instance = $instance;
+        self::$instance = $instance;
     }
 
-    public static function set($id, $value)
+    public static function set($index, $value)
     {
         $instance = self::getInstance();
-        $instance->_vars[$id] = $value;
+        $instance->vars[$index] = $value;
     }
 
-    public static function get($id)
+    public static function get($index)
     {
         $instance = self::getInstance();
-        if (isset($instance->_vars[$id])):
-                return $instance->_vars[$id]; else:
-                return;
+        if (isset($instance->vars[$index])) :
+            return $instance->vars[$index];
+        else :
+            return;
         endif;
     }
 
     public static function getVars()
     {
         $instance = self::getInstance();
-        if (isset($instance->_vars)):
-                return $instance->_vars; else:
-                return;
+        if (!empty($instance->vars)) :
+            return $instance->vars;
         endif;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace ON;
+namespace Oraculum;
 
 class Crypt
 {

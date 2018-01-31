@@ -1,10 +1,10 @@
 <?php
 
-namespace ON;
+namespace Oraculum;
 
-class ON
+class On
 {
-    private static $_instance = null;
+    private static $instance = null;
 
     public function __construct()
     {
@@ -12,28 +12,28 @@ class ON
 
     public static function getInstance()
     {
-        if (is_null(self::$_instance)):
-                self::setInstance(new self());
+        if (is_null(self::$instance)) :
+            self::setInstance(new self());
         endif;
 
-        return self::$_instance;
+        return self::$instance;
     }
 
     public static function setInstance(self $instance)
     {
-        self::$_instance = $instance;
+        self::$instance = $instance;
     }
 
-    public static function App()
+    public static function app()
     {
-        $instance = self::getInstance();
+        self::getInstance();
 
         return new App();
     }
 
-    public static function CliApp()
+    public static function cliApp()
     {
-        $instance = self::getInstance();
+        self::getInstance();
 
         return new CliApp();
     }
