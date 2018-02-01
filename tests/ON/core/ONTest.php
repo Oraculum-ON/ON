@@ -1,5 +1,5 @@
 <?php
-    use ON\ON;
+    use Oraculum\On;
 use PHPUnit\Framework\TestCase;
 
 class ONTest extends TestCase
@@ -7,7 +7,7 @@ class ONTest extends TestCase
     public function testApp()
     {
         try {
-            $app = @ON::App();
+            $app = @On::App();
         } catch (InvalidArgumentException $notExpected) {
             $this->fail();
         }
@@ -17,7 +17,7 @@ class ONTest extends TestCase
     public function testCliApp()
     {
         try {
-            $app = ON::CliApp();
+            $app = On::CliApp();
         } catch (InvalidArgumentException $notExpected) {
             $this->fail();
         }

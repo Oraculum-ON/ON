@@ -1,5 +1,5 @@
 <?php
-    use ON\Register;
+    use Oraculum\Register;
 use PHPUnit\Framework\TestCase;
 
 class RegisterTest extends TestCase
@@ -21,5 +21,11 @@ class RegisterTest extends TestCase
     {
         $result = Register::get('variavel-inexistente');
         $this->assertEmpty($result);
+    }
+
+    public function testGetVarsFill()
+    {
+        $result = Register::getVars();
+        $this->assertEquals(array('variavel'=>'testeunitario'), $result);
     }
 }

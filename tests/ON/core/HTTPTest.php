@@ -1,26 +1,37 @@
 <?php
-    use ON\HTTP;
+    use Oraculum\Http;
 use PHPUnit\Framework\TestCase;
 
-class HTTPTest extends TestCase
+class HttpTest extends TestCase
 {
-	/*public function testRedirect()
+    /**
+     * @runInSeparateProcess
+     */
+	public function testRedirect()
 	{
-		//$result = HTTP::redirect('testRedirect');
-		//$this->assertContains('Location: testRedirect', xdebug_get_headers());
-	}*/
+		$result = Http::redirect('testRedirect');
+		$this->assertContains('Location: testRedirect', xdebug_get_headers());
+	}
+    /**
+     * @runInSeparateProcess
+     */
+	public function testRedirectNull()
+	{
+		$result = Http::redirect(null);
+		$this->assertNull($result);
+	}
 
     public function testIp()
     {
         $_SERVER['REMOTE_ADDR'] = 'testIP';
-        $result = HTTP::ip();
+        $result = Http::ip();
         $this->assertEquals('testIP', $result);
     }
 
     public function testHost()
     {
         $_SERVER['REMOTE_HOST'] = 'testHost';
-        $result = HTTP::host();
+        $result = Http::host();
         $this->assertEquals($_SERVER['REMOTE_HOST'], $result);
     }
 	
@@ -28,14 +39,14 @@ class HTTPTest extends TestCase
     {
         $_SERVER['REMOTE_ADDR'] = 'testIP';
         $_SERVER['REMOTE_HOST'] = '';
-        $result = HTTP::host();
+        $result = Http::host();
         $this->assertEquals('testIP', $result);
     }
 
     public function testReferer()
     {
         $_SERVER['HTTP_REFERER'] = 'testReferer';
-        $result = HTTP::referer();
+        $result = Http::referer();
         $this->assertEquals($_SERVER['HTTP_REFERER'], $result);
     }
 }

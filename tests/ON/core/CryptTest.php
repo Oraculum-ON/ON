@@ -1,5 +1,5 @@
 <?php
-    use ON\Crypt;
+    use Oraculum\Crypt;
 use PHPUnit\Framework\TestCase;
 
 class CryptTest extends TestCase
