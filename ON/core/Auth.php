@@ -4,67 +4,69 @@ namespace Oraculum;
 
 class Auth
 {
-    private $sessname = 'ofauth';
-    private $logoffurl = null;
-    private $loginurl = null;
+    private $sessName = 'ofauth';
+    private $logoffUrl = null;
+    private $loginUrl = null;
     private $homeurl = null;
-    private $dbobj = null;
-    private $keyfield = null;
-    private $userfield = null;
-    private $passwordfield = null;
-    private $emailfield = null;
-    private $cryptkeyfield = null;
+    private $dbObj = null;
+    private $keyField = null;
+    private $passwordField = null;
+    private $emailField = null;
+    private $cryptKeyField = null;
     private $user = null;
     private $password = null;
     private $email = null;
     private $cryptkey = null;
-    private $crypttype = 'md5';
-    private $crypttypes = ['md5', 'sha1', 'blowfish'];
+    private $cryptType = 'md5';
+    private $cryptTypes = ['md5', 'sha1', 'blowfish'];
     private $key = null;
     private $register = null;
     private $fields = [];
+    private $userFields = [];
+    private $statusField = null;
+    private $statusValue = null;
 
     public function __construct()
     {
 		$url = ((defined('URL')) ? URL : '/');
-        $this->logoffurl = $url.'logoff';
-        $this->loginurl = $url.'login';
+        $this->logoffUrl = $url.'logoff';
+        $this->loginUrl = $url.'login';
     }
 
     public function setSess($sess)
     {
-        $this->sessname = $sess;
+        $this->sessName = $sess;
     }
 
     public function getSess()
     {
-        return $this->sessname;
+        return $this->sessName;
     }
 
     public function setLogoffURL($url)
     {
-        $this->logoffurl = $url;
+        $this->logoffUrl = $url;
     }
 
     public function setLoginURL($url)
     {
-        $this->loginurl = $url;
+        $this->loginUrl = $url;
     }
 
     public function setHomeURL($url)
     {
-        $this->homeurl = $url;
+        $this->homeUrl = $url;
     }
 
     public function verify($redirect = false)
     {
         Request::initSess();
-        $user = Request::getSess($this->sessname);
+        $user = Request::getSess($this->sessName);
         if (!is_null($user)) : 
-                $ip = Crypt::strDecrypt($user['ip']);
+            $ip = Crypt::strDecrypt($user['ip']);
             if ($ip != Http::ip()) :
                 if ($redirect) :
-                    Http::redirect($this->logoffurl);
+                    Http::redirect($this->logoffUrl);
                 endif;
 
                 return false;
@@ -73,7 +75,7 @@ class Auth
             endif;
         else :
             if ($redirect) :
-                Http::redirect($this->logoffurl);
+                Http::redirect($this->logoffUrl);
             endif;
 
             return false;
@@ -93,45 +95,66 @@ class Auth
     }
 
     /* DB Autentication */
-    public function setDbAutentication($dbobj = null)
+    public function setDbAutentication($dbObj = null)
     {
-        if (!is_null($dbobj)) :
-            $this->dbobj = $dbobj;
+        if (!is_null($dbObj)) :
+            $this->dbObj = $dbObj;
         endif;
     }
 
-    public function setDbKeyField($keyfield = null)
+    public function setDbKeyField($keyField = null)
     {
-        if (!is_null($keyfield)) :
-            $this->keyfield = $keyfield;
+        if (!is_null($keyField)) :
+            $this->keyField = $keyField;
         endif;
     }
 
-    public function setDbUserField($userfield = null)
+    public function setDbUserField($userField = null)
     {
-        if (!is_null($userfield)) :
-            $this->userfield = $userfield;
+        if (!is_null($userField)) :
+            $this->setDbUserFields([$userField]);
         endif;
     }
 
-    public function setDbPasswordField($passwordfield = null)
+    public function setDbUserFields($userFields = [])
     {
-        if (!is_null($passwordfield)) :
-            $this->passwordfield = $passwordfield;
+        if (!empty($userFields)) :
+            $this->userFields = $userFields;
         endif;
     }
 
-    public function setDbEmailField($emailfield = null)
+    public function setDbPasswordField($passwordField = null)
     {
-        if (!is_null($emailfield)) :
-            $this->emailfield = $emailfield;
+        if (!is_null($passwordField)) :
+            $this->passwordField = $passwordField;
         endif;
     }
 
-    public function setDbCryptkeyField($cryptkeyfield = null)
+    public function setDbEmailField($emailField = null)
     {
-        if (!is_null($cryptkeyfield)) :
-            $this->cryptkeyfield = $cryptkeyfield;
+        if (!is_null($emailField)) :
+            $this->emailField = $emailField;
+        endif;
+    }
+
+    public function setDbStatusField($statusField = null)
+    {
+        if (!is_null($statusField)) :
+            $this->statusField = $statusField;
+        endif;
+    }
+
+    public function setDbStatusValue($statusValue = null)
+    {
+        if (!is_null($statusValue)) :
+            $this->statusValue = $statusValue;
+        endif;
+    }
+
+    public function setDbCryptkeyField($cryptKeyField = null)
+    {
+        if (!is_null($cryptKeyField)) :
+            $this->cryptKeyField = $cryptKeyField;
         endif;
     }
 
@@ -156,52 +179,67 @@ class Auth
         endif;
     }
 
-    public function setCryptkey($cryptkey = null)
+    public function setCryptkey($cryptKey = null)
     {
-        if (!is_null($cryptkey)) :
-            $this->cryptkey = $cryptkey;
+        if (!is_null($cryptKey)) :
+            $this->cryptKey = $cryptKey;
         endif;
     }
 
-    public function dbAuth()
+    public function dbAuth($debug = false)
     {
-        if (is_object($this->dbobj)) :
-            $userfield = 'getBy'.ucwords($this->userfield);
-            $passwordfield = $this->passwordfield;
-            $keyfield = $this->keyfield;
-            $obj = $this->dbobj;
-            $register = $obj->$userfield($this->user);
-            if (count($register) == 1) :
-                if ($this->crypttype == 'md5') :
-                    if ($register->$passwordfield == md5($this->password)) :
-                        $this->key = $register->$keyfield;
-                        $this->register = $register;
+        $found = false;
+        if ((is_object($this->dbObj))&&
+            (!empty($this->userFields))) :
+            $obj = $this->dbObj;
+            foreach ($this->userFields as $userField):
+                $filter = 'getBy'.ucwords($userField);
+                $reg = $obj->$filter($this->user);
+                $found=(count($reg) == 1);
+                if ($found) :
+                    break 1;
+                endif;
+            endforeach;
+            $passwordfield = $this->passwordField;
+            $keyField = $this->keyField;
+            if ($found) :
+                if ((!is_null($this->statusField)&&
+                    (!is_null($this->statusValue)))):
+                        $statusField = $this->statusField;
+                    if ($reg->$statusField != $this->statusValue):
+                        return false;
+                    endif;
+                endif;
+                if ($this->cryptType == 'md5') :
+                    if ($reg->$passwordfield == md5($this->password)) :
+                        $this->key = $reg->$keyField;
+                        $this->register = $reg;
 
                         return true;
                     else :
                         return false;
                     endif;
-                elseif ($this->crypttype == 'sha1') :
+                elseif ($this->cryptType == 'sha1') :
                     if ($register->$passwordfield == sha1($this->password)) :
-                        $this->key = $register->$keyfield;
-                        $this->register = $register;
+                        $this->key = $reg->$keyField;
+                        $this->register = $reg;
 
                         return true;
                     else :
                         return false;
                     endif;
-                elseif ($this->crypttype == 'blowfish') :
-                    if (Crypt::blowfishCheck($this->password, $register->$passwordfield)) :
-                        $this->key = $register->$keyfield;
-                        $this->register = $register;
+                elseif ($this->cryptType == 'blowfish') :
+                    if (Crypt::blowfishCheck($this->password, $reg->$passwordField)) :
+                        $this->key = $reg->$keyField;
+                        $this->register = $reg;
 
                         return true;
                     else :
                         return false;
                     endif;
                 else :
-                    if ($register->$passwordfield == $this->password) :
-                        $this->key = $register->$keyfield;
+                    if ($register->$passwordField == $this->password) :
+                        $this->key = $register->$keyField;
 
                         return true;
                     else :
@@ -216,21 +254,21 @@ class Auth
 
     public function passwordlessAuth($clearkey = true)
     {
-        if (is_object($this->dbobj)) :
-                $cryptfield = $this->cryptkeyfield;
-            $getcryptfield = 'getBy'.ucwords($this->cryptkeyfield);
-            $keyfield = $this->keyfield;
+        if (is_object($this->dbObj)) :
+            $cryptField = $this->cryptKeyField;
+            $getCryptField = 'getBy'.ucwords($this->cryptKeyField);
+            $keyField = $this->keyField;
             $obj = $this->dbobj;
-            $this->register = $obj->$getcryptfield($this->cryptkey);
+            $this->register = $obj->$getCryptField($this->cryptKey);
             if (count($this->register) == 1) :
-                    $this->key = $this->register->$keyfield;
+                $this->key = $this->register->$keyField;
                 $key = Crypt::strDecrypt($this->cryptkey);
                 $key = explode('::', $key);
                 $time = $key[0];
                 $timeout = $key[2];
                 $auth = (time() < $time + $timeout);
                 if (($auth) && ($clearkey)) :
-                        $this->register->$cryptfield = null;
+                        $this->register->$cryptField = null;
                     $this->register->save();
                 endif;
 
@@ -263,9 +301,9 @@ class Auth
             $user['key'] = Crypt::strCrypt($this->key);
             $user['user'] = Crypt::strCrypt($this->user);
             Request::initSess();
-            Request::setSess($this->sessname, $user);
+            Request::setSess($this->sessName, $user);
             if ($redirect) :
-                Http::redirect($this->homeurl);
+                Http::redirect($this->homeUrl);
             endif;
 
             return true;
@@ -276,8 +314,8 @@ class Auth
 
     public function setCrypttype($type)
     {
-        if (in_array($type, $this->crypttypes)) :
-            $this->crypttype = $type;
+        if (in_array($type, $this->cryptTypes)) :
+            $this->cryptType = $type;
         endif;
     }
 }
