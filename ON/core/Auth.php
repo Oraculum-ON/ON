@@ -186,7 +186,7 @@ class Auth
         endif;
     }
 
-    public function dbAuth($debug = false)
+    public function dbAuth()
     {
         $found = false;
         if ((is_object($this->dbObj))&&
