@@ -102,7 +102,7 @@ class Router
             if (($this->requestUrl == '/') && ($url == '/')) :
                 return $this->call($call);
                 break;
-            elseif (rtrim($this->requestUrl, '/') == rtrim($url, '/')) :
+            elseif (trim($this->requestUrl, '/') == trim($url, '/')) :
                 return $this->call($call);
                 break;
             endif;
