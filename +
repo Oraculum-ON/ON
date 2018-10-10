@@ -1,0 +1,42 @@
+#!/usr/bin/env php
+<?php
+    define('DS', DIRECTORY_SEPARATOR);
+    include('ON/autoload.php');
+	
+    use ON\ON;
+
+    $app=ON::CliApp();
+	
+	$install=static function($plugin) {
+		echo 'Baixando '.$plugin.'!'."\n";
+		$addDir = 'ON'.DS.'adds'.DS;
+		$url = 'https://raw.githubusercontent.com/Oraculum-ON/Adds/master/adds/'.$plugin.'.php';
+		$name= basename($url);
+		$content = file_get_contents($url);
+		if ((bool)$content):
+			file_put_contents($addDir.$name, $content);
+			return 'Download efetuado com sucesso!';
+		else:
+			return 'Pacote nao encontrado!';
+		endif;
+    };
+	$list=static function() {
+		echo 'Carregando lista...'."\n";
+		$url = 'https://raw.githubusercontent.com/Oraculum-ON/Adds/master/adds/list.txt';
+		$name= basename($url);
+		$content = file_get_contents($url);
+		if ((bool)$content):
+			return $content;
+		else:
+			return 'Nao foi possivel recuperar a lista de pacodes!';
+		endif;
+    };
+	
+	
+	$app->addMethod('list', $list, 'Lista os componentes disponiveis');
+	$app->addMethod('install', $install, 'Instala o componente "php + install componente"');
+	
+	$return=$app->setDefaultText("\n\n\t\t".'Oraculum +'."\n\n\n".'Dica: Use php + help')
+				->setErrorText('Metodo nao encontrado (Use `php + help`)')
+				->start($argv);
+	echo $return;
