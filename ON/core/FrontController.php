@@ -13,13 +13,13 @@ class FrontController
     public function setBaseUrl($url)
     {
         if (!defined('URL')) :
-			define('URL', $url);
-            $gets = Request::gets();
-            $base = count(explode('/', URL));
-			$base = (($base > 1) ? ($base - 2) : $base);
-            $base = (count(explode('/', URL)) - 2);
-            $base = (strpos($gets[$base], '.php') ? $base + 2 : $base);
-            define('BASE', $base);
+            define('URL', $url);
+        $gets = Request::gets();
+        $base = count(explode('/', URL));
+        $base = (($base > 1) ? ($base - 2) : $base);
+        $base = (count(explode('/', URL)) - 2);
+        $base = (strpos($gets[$base], '.php') ? $base + 2 : $base);
+        define('BASE', $base);
         endif;
 
         return $this;
@@ -45,24 +45,22 @@ class FrontController
     {
         $request = Request::request();
         if ((URL != '') && (URL != '/')) :
-            $url = str_ireplace(URL, '', $request);
-        else :
+            $url = str_ireplace(URL, '', $request); else :
             $url = $request;
         endif;
         if (!defined('ACTION_URL')) :
             define('ACTION_URL', $url);
         endif;
-        
+
         $action = Request::getAction();
         $gets = Request::gets();
         if (isset($gets[(BASE) + 1])) :
-            $page = $gets[(BASE) + 1];
-        else :
-			$page = $this->defaulturl;
+            $page = $gets[(BASE) + 1]; else :
+            $page = $this->defaulturl;
         endif;
         if ($page == '') :
             $page = $this->defaulturl;
         endif;
-		App::loadControl()->loadPage($page, $url);
+        App::loadControl()->loadPage($page, $url);
     }
 }

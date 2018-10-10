@@ -8,7 +8,7 @@ class Validate
     public $error = [];
     public $fields = [];
     public $values = [];
-    
+
     const STRING = 'string';
     const NUMERIC = 'numeric';
     const INT = 'int';
@@ -21,26 +21,28 @@ class Validate
     public function __construct()
     {
     }
-    
+
     public function field($field)
     {
         $this->fields[$field] = new ValidateField();
+
         return $this->fields[$field];
     }
-    
+
     public function valid($stop = false)
     {
         foreach ($this->fields as $field => $attr) :
             $this->$field = $attr->value;
-            if (!$attr->valid()) :
+        if (!$attr->valid()) :
                 $this->valid = false;
-                $attr->type;
-                $this->error[] = $attr->errormsg;
-                if ($stop) :
+        $attr->type;
+        $this->error[] = $attr->errormsg;
+        if ($stop) :
                     return $this->valid;
-                endif;
-            endif;
+        endif;
+        endif;
         endforeach;
+
         return $this->valid;
     }
 }

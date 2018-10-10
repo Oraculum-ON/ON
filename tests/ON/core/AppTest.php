@@ -1,4 +1,5 @@
 <?php
+
 use Oraculum\App;
 use PHPUnit\Framework\TestCase;
 
@@ -9,56 +10,57 @@ class AppTest extends TestCase
      */
     public function testLoadView()
     {
-        $app=new App();
+        $app = new App();
         $result = $app->loadView();
         $this->assertInstanceOf(Oraculum\View::class, $result);
     }
-    
+
     /**
      * @runInSeparateProcess
      */
     public function testLoadControl()
     {
-        $app=new App();
+        $app = new App();
         $result = $app->loadControl();
         $this->assertInstanceOf(Oraculum\Control::class, $result);
     }
-    
+
     /**
      * @runInSeparateProcess
      */
     public function testLoadModel()
     {
-        $app=new App();
+        $app = new App();
         $result = $app->loadModel(null);
         $this->assertInstanceOf(Oraculum\Model::class, $result);
     }
+
     /**
      * @runInSeparateProcess
      */
     public function testView()
     {
-        $app=new App();
+        $app = new App();
         $result = $app->view();
         $this->assertInstanceOf(Oraculum\View::class, $result);
     }
-    
+
     /**
      * @runInSeparateProcess
      */
     public function testControl()
     {
-        $app=new App();
+        $app = new App();
         $result = $app->control();
         $this->assertInstanceOf(Oraculum\Control::class, $result);
     }
-    
+
     /**
      * @runInSeparateProcess
      */
     public function testModel()
     {
-        $app=new App();
+        $app = new App();
         $result = $app->model();
         $this->assertInstanceOf(Oraculum\Model::class, $result);
     }
@@ -68,19 +70,19 @@ class AppTest extends TestCase
      */
     public function testSetControlDir()
     {
-        $app=new App();
+        $app = new App();
         $app->setControlDir('tests/assets');
         $result = CONTROL_DIR;
         $this->assertEquals('tests/assets', $result);
     }
-    
+
     /**
      * @runInSeparateProcess
      */
     public function testSetControlDirError()
     {
         $this->expectException('Oraculum\Exception');
-        $app=new App();
+        $app = new App();
         $app->setControlDir('teste');
     }
 
@@ -94,14 +96,14 @@ class AppTest extends TestCase
         $result = VIEW_DIR;
         $this->assertEquals('tests/assets', $result);
     }
-    
+
     /**
      * @runInSeparateProcess
      */
     public function testSetViewDirError()
     {
         $this->expectException('Oraculum\Exception');
-        $app=new App();
+        $app = new App();
         $app->setViewDir('teste');
     }
 
@@ -110,19 +112,19 @@ class AppTest extends TestCase
      */
     public function testSetModelDir()
     {
-        $app=new App();
+        $app = new App();
         $app->setModelDir('tests/assets/models');
         $result = MODEL_DIR;
         $this->assertEquals('tests/assets/models', $result);
     }
-    
+
     /**
      * @runInSeparateProcess
      */
     public function testSetModelDirError()
     {
         $this->expectException('Oraculum\Exception');
-        $app=new App();
+        $app = new App();
         $app->setModelDir('teste');
     }
 
@@ -131,7 +133,7 @@ class AppTest extends TestCase
      */
     public function testFrontController()
     {
-        $app=new App();
+        $app = new App();
         $result = $app->frontController();
         $this->assertInstanceOf(Oraculum\FrontController::class, $result);
     }
@@ -139,12 +141,12 @@ class AppTest extends TestCase
     public function testCheckDebug()
     {
         App::checkDebug();
-        $result = (bool)ini_get('display_errors');
+        $result = (bool) ini_get('display_errors');
         $this->assertFalse($result);
-        
+
         define('ON_DEBUG', true);
         App::checkDebug();
-        $result = (bool)ini_get('display_errors');
+        $result = (bool) ini_get('display_errors');
         $this->assertTrue($result);
     }
 }

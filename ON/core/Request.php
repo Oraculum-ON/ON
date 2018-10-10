@@ -7,7 +7,7 @@ class Request
     public static function defineTmpDir($dir = '/tmp/')
     {
         if (!defined('TMP_DIR')) :
-			define('TMP_DIR', $dir);
+            define('TMP_DIR', $dir);
         endif;
     }
 
@@ -15,19 +15,18 @@ class Request
     public static function post($indice, $tipo = 's')
     {
         if ((isset($_POST[$indice])) && ($_POST[$indice] != '')) :
-			$valor = $_POST[$indice];
-            if ($tipo != 'h') :
-				$valor = strip_tags($valor);
-                $valor = htmlentities($valor, ENT_SUBSTITUTE, 'utf-8');
-            endif;
-            if ($tipo == 'n') :
-				$valor = floor($valor);
-				if ($valor == 0) :
-					$valor = null;
-				endif;
-			endif;
-        else :
-			$valor = null;
+            $valor = $_POST[$indice];
+        if ($tipo != 'h') :
+                $valor = strip_tags($valor);
+        $valor = htmlentities($valor, ENT_SUBSTITUTE, 'utf-8');
+        endif;
+        if ($tipo == 'n') :
+                $valor = floor($valor);
+        if ($valor == 0) :
+                    $valor = null;
+        endif;
+        endif; else :
+            $valor = null;
         endif;
 
         return $valor;
@@ -37,21 +36,20 @@ class Request
     public static function get($indice, $tipo = 's')
     {
         if ((isset($_GET[$indice])) && ($_GET[$indice] != '')) :
-			$valor = $_GET[$indice];
-			$valor = strip_tags($valor);
-			$valor = htmlentities($valor, ENT_SUBSTITUTE, 'utf-8');
-			$valor = addslashes($valor);
-			if ($tipo == 'n') :
+            $valor = $_GET[$indice];
+        $valor = strip_tags($valor);
+        $valor = htmlentities($valor, ENT_SUBSTITUTE, 'utf-8');
+        $valor = addslashes($valor);
+        if ($tipo == 'n') :
                 $valor = floor($valor);
-				if ($valor == 0) :
-						$valor = null;
-				endif;
-			endif;
-        else :
+        if ($valor == 0) :
+                        $valor = null;
+        endif;
+        endif; else :
             $valor = null;
         endif;
 
-		return $valor;
+        return $valor;
     }
 
     // Desconvertendo para UTF8 valores passados por $_POST
@@ -60,7 +58,7 @@ class Request
         foreach ($_POST as $key => $value) :
             if (mb_detect_encoding($value) == 'UTF-8') :
                 $_POST[$key] = utf8_decode($value);
-            endif;
+        endif;
         endforeach;
     }
 
@@ -70,7 +68,7 @@ class Request
         foreach ($_POST as $key => $value) :
             if (mb_detect_encoding($value) != 'UTF-8') :
                 $_POST[$key] = utf8_encode($value);
-            endif;
+        endif;
         endforeach;
     }
 
@@ -80,7 +78,7 @@ class Request
         foreach ($_GET as $key => $value) :
             if (mb_detect_encoding($value) == 'UTF-8') :
                 $_GET[$key] = utf8_decode($value);
-            endif;
+        endif;
         endforeach;
     }
 
@@ -90,7 +88,7 @@ class Request
         foreach ($_GET as $key => $value) :
             if (mb_detect_encoding($value) != 'UTF-8') :
                 $_GET[$key] = utf8_encode($value);
-            endif;
+        endif;
         endforeach;
     }
 
@@ -99,24 +97,20 @@ class Request
     {
         if ((isset($_FILES[$indice])) && ($_FILES[$indice] != '')) :
             $file = $_FILES[$indice];
-            if ($file['error'] != 0) :
-                return false;
-            elseif (is_null($atributo)) :
-                return $file;
-            else :
+        if ($file['error'] != 0) :
+                return false; elseif (is_null($atributo)) :
+                return $file; else :
                 return $file[$atributo];
-            endif;
         endif;
-
-        return;
+        endif;
     }
 
     // Capturar sessao
     public static function getSess($index)
     {
-        return ((isset($_SESSION[$index])) ?
+        return (isset($_SESSION[$index])) ?
                 $_SESSION[$index] :
-                null);
+                null;
     }
 
     // Gravar sessao
@@ -124,8 +118,8 @@ class Request
     {
         if ((isset($indice)) && (isset($valor))) :
             $_SESSION[$indice] = $valor;
-            return true;
-        else :
+
+        return true; else :
             return false;
         endif;
     }
@@ -136,8 +130,7 @@ class Request
         if (isset($indice)) :
             unset($_SESSION[$indice]);
 
-            return true;
-        else :
+        return true; else :
             return false;
         endif;
     }
@@ -149,8 +142,8 @@ class Request
         if (!isset($_SESSION)) :
             if (ini_get('session.save_path') != TMP_DIR) :
                 session_save_path(TMP_DIR);
-            endif;
-            session_start();
+        endif;
+        session_start();
         endif;
     }
 
@@ -159,15 +152,16 @@ class Request
     {
         $expirar = (is_null($expirar)) ? (time() + 604800) : $expirar;
         $return = \setcookie($nome, $valor, $expirar);
+
         return $return;
     }
 
     // Ler cookie
     public static function getCookie($index)
     {
-        return ((isset($_COOKIE[$index])) ?
+        return (isset($_COOKIE[$index])) ?
                 $_COOKIE[$index] :
-                null);
+                null;
     }
 
     // Capturar pagina
@@ -183,7 +177,7 @@ class Request
             $gets = self::gets();
         endif;
 
-        return ($gets[count($gets) - 1]);
+        return $gets[count($gets) - 1];
     }
 
     // Capturar parametro
@@ -193,8 +187,8 @@ class Request
         if (is_string($index)) :
             if (($key = array_search($index, $gets)) === false) :
                 return $default;
-            endif;
-            $index = $key + 2;
+        endif;
+        $index = $key + 2;
         endif;
         $index = (int) $index - 1;
 
@@ -208,12 +202,11 @@ class Request
 
         return explode('/', str_replace('?', '/', $request));
     }
-    
+
     public static function getAction()
     {
         if (defined('ACTION_URL')) :
-            return explode('/', str_replace('?', '/', ACTION_URL));
-        else :
+            return explode('/', str_replace('?', '/', ACTION_URL)); else :
             return self::gets();
         endif;
     }
@@ -230,8 +223,8 @@ class Request
 
     public static function referer()
     {
-        return ((isset($_SERVER['HTTP_REFERER'])) ?
+        return (isset($_SERVER['HTTP_REFERER'])) ?
                 $_SERVER['HTTP_REFERER'] :
-                null);
+                null;
     }
 }

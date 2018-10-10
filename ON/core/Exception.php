@@ -3,7 +3,7 @@
 namespace Oraculum;
 
 class Exception extends \Exception
-{	
+{
     public function __construct($message, $code = null)
     {
         parent::__construct($message, $code);
@@ -40,44 +40,41 @@ class Exception extends \Exception
         foreach ($trace as $error) :
             if (isset($error['file'])) :
                 $filecode = $error['file'];
-                $report .= '<hr />';
-                $report .= '<strong>File:</strong> '.$filecode.' <strong>line '.$error['line'].'</strong><br />';
-            else :
+        $report .= '<hr />';
+        $report .= '<strong>File:</strong> '.$filecode.' <strong>line '.$error['line'].'</strong><br />'; else :
                     $filecode = null;
-            endif;
-                $args = [];
-            if (isset($error['args'])) :
+        endif;
+        $args = [];
+        if (isset($error['args'])) :
                 foreach ($error['args'] as $arg) :
                     if (is_object($arg)) :
-                        $args[] = get_class($arg).' object';
-                    elseif (is_array($arg)) :
-                                $args[] = implode(',', $arg);
-                    else :
+                        $args[] = get_class($arg).' object'; elseif (is_array($arg)) :
+                                $args[] = implode(',', $arg); else :
                                     $args[] = (string) $arg;
-                    endif;
-                endforeach;
-            endif;
+        endif;
+        endforeach;
+        endif;
 
-            if (isset($error['class'])) :
+        if (isset($error['class'])) :
                 $report .= '<span style="color:#0a0;">'.$error['class'].'</span>';
-            endif;
-            if (isset($error['type'])) :
+        endif;
+        if (isset($error['type'])) :
                 $report .= '<font style="color:#000;">'.$error['type'].'</font>';
-            endif;
-                $report .= '<strong style="color:#00a;">'.$error['function'].'</strong>';
-                $report .= '(<font style="color:#a00;">\''.implode(', ', $args).'\'</font>);';
+        endif;
+        $report .= '<strong style="color:#00a;">'.$error['function'].'</strong>';
+        $report .= '(<font style="color:#a00;">\''.implode(', ', $args).'\'</font>);';
 
-            if (!is_null($filecode)) :
+        if (!is_null($filecode)) :
                 if (file_exists($filecode)) :
                     $cod = 'sourcecodedebug'.time().rand();
-                    $report .= '<br /><a href="#alert"'.$cod.'" onclick="document.getElementById(\''.$cod.'\').style.display=\'block\';" style="color:#00a;">';
-                    $report .= 'Show Source Code</a>';
-                    $report .= '<div id="'.$cod.'" style="display:none;border:1px solid #444;background-color:#fff; word-wrap:break-word;">'.highlight_file($filecode, true).'</div><br />';
-                endif;
-            endif;
+        $report .= '<br /><a href="#alert"'.$cod.'" onclick="document.getElementById(\''.$cod.'\').style.display=\'block\';" style="color:#00a;">';
+        $report .= 'Show Source Code</a>';
+        $report .= '<div id="'.$cod.'" style="display:none;border:1px solid #444;background-color:#fff; word-wrap:break-word;">'.highlight_file($filecode, true).'</div><br />';
+        endif;
+        endif;
         endforeach;
         $report = '<div style=\'float:left;text-align:left;\'>'.$report.'</div>';
-        Exception::alert($report);
+        self::alert($report);
     }
 
     public static function showError($code = null, $message = null, $file = null, $line = null, $context = null)
@@ -87,8 +84,9 @@ class Exception extends \Exception
         $report .= '<strong>Source File:</strong> '.$file.' <strong>line '.$line.'</strong><br />';
         $report .= '<h3>Backtrace</h3>';
         $report = '<div style=\'float:left;text-align:left;\'>'.$report.'</div>';
-        Exception::alert($report);
+        self::alert($report);
     }
+
     public static function alert($mensagem)
     {
         $cod = time().rand();

@@ -26,6 +26,6 @@ class RegisterTest extends TestCase
     public function testGetVarsFill()
     {
         $result = Register::getVars();
-        $this->assertEquals(array('variavel'=>'testeunitario'), $result);
+        $this->assertEquals(['variavel'=>'testeunitario'], $result);
     }
 }

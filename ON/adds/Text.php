@@ -10,7 +10,7 @@ class Text
         $string = round($string, 2);
         $string = number_format($string, 2, ',', '.');
         if ($cifrao) :
-			$string = MOEDA.' '.$string;
+            $string = MOEDA.' '.$string;
         endif;
 
         return $string;
@@ -31,11 +31,9 @@ class Text
     public static function data($data = null, $notnull = true)
     {
         if (!is_null($data)) :
-			return date('d/m/Y', strtotime($data));
-        elseif ($notnull) :
-			return date('d/m/Y');
-        else :
-			return;
+            return date('d/m/Y', strtotime($data)); elseif ($notnull) :
+            return date('d/m/Y'); else :
+            return;
         endif;
     }
 
@@ -43,13 +41,11 @@ class Text
     public static function dataSql($data = null, $notnull = true)
     {
         if (!is_null($data)) :
-			$data = implode('-', array_reverse(explode('/', $data)));
+            $data = implode('-', array_reverse(explode('/', $data)));
 
-            return $data;
-        elseif ($notnull) :
-			return date('Y-m-d');
-        else :
-			return;
+        return $data; elseif ($notnull) :
+            return date('Y-m-d'); else :
+            return;
         endif;
     }
 
@@ -57,11 +53,9 @@ class Text
     public static function hora($data = null, $notnull = true)
     {
         if (!is_null($data)) :
-			return date('H:i:s', strtotime($data));
-        elseif ($notnull) :
-			return date('H:i:s');
-        else :
-			return;
+            return date('H:i:s', strtotime($data)); elseif ($notnull) :
+            return date('H:i:s'); else :
+            return;
         endif;
     }
 
@@ -69,11 +63,9 @@ class Text
     public static function dataHora($data = null, $notnull = true)
     {
         if (!is_null($data)) :
-			return date('d/m/Y H:i:s', strtotime($data));
-        elseif ($notnull) :
-			return date('d/m/Y H:i:s');
-        else :
-			return;
+            return date('d/m/Y H:i:s', strtotime($data)); elseif ($notnull) :
+            return date('d/m/Y H:i:s'); else :
+            return;
         endif;
     }
 
@@ -82,14 +74,12 @@ class Text
     {
         $hora = date('H');
         if (($hora >= 6) && ($hora < 12)) :
-			$saudacao = 'Bom Dia';
-        elseif (($hora >= 12) && ($hora < 18)) :
-			$saudacao = 'Boa Tarde';
-        elseif (($hora >= 18) || ($hora < 6)) :
-			$saudacao = 'Boa Noite';
+            $saudacao = 'Bom Dia'; elseif (($hora >= 12) && ($hora < 18)) :
+            $saudacao = 'Boa Tarde'; elseif (($hora >= 18) || ($hora < 6)) :
+            $saudacao = 'Boa Noite';
         endif;
 
-		return $saudacao;
+        return $saudacao;
     }
 
     public static function getpwd($estrutura = [])
@@ -98,18 +88,17 @@ class Text
         $total = count($estrutura);
         $contador = 0;
         foreach ($estrutura as $link => $descricao) :
-			$pwd .= '/';
-            if (($contador + 1) == $total) :
-				$pwd .= '<a href="'.BASE_URL.'/'.$link.'" ';
-                $pwd .= 'style="font-weight: bold;">';
-                $pwd .= $descricao;
-                $pwd .= '</a>';
-            else :
-				$pwd .= '<a href="'.BASE_URL.'/'.$link.'">';
-				$pwd .= $descricao;
-				$pwd .= '</a>';
-            endif;
-			$contador++;
+            $pwd .= '/';
+        if (($contador + 1) == $total) :
+                $pwd .= '<a href="'.BASE_URL.'/'.$link.'" ';
+        $pwd .= 'style="font-weight: bold;">';
+        $pwd .= $descricao;
+        $pwd .= '</a>'; else :
+                $pwd .= '<a href="'.BASE_URL.'/'.$link.'">';
+        $pwd .= $descricao;
+        $pwd .= '</a>';
+        endif;
+        $contador++;
         endforeach;
         $pwd .= '</span><br />';
 
@@ -120,16 +109,14 @@ class Text
     {
         $palavra = $n > 1 ? self::plural($palavra) : $palavra;
         if ($addnumber) :
-			$str = $n.' '.$palavra;
-        else :
-			$str = $palavra;
+            $str = $n.' '.$palavra; else :
+            $str = $palavra;
         endif;
         if ($return) :
-			echo $str;
+            echo $str;
 
-            return;
-        else :
-			return $str;
+        return; else :
+            return $str;
         endif;
     }
 
@@ -138,28 +125,20 @@ class Text
         if (preg_match('/[sz]$/', $palavra)
             || (preg_match('/[^aeioudgkprt]h$/', $palavra))
         ) :
-			$palavra .= 'es';
-        elseif (preg_match('/[^aeiou]y$/', $palavra)) :
-			$palavra = substr_replace($palavra, 'ies', -1);
-        elseif (preg_match('/[x]$/', $palavra)) :
-			$palavra = $palavra;
-        elseif (preg_match('/[m]$/', $palavra)) :
-			$palavra = substr_replace($palavra, 'ns', -1);
-        elseif ((preg_match('/[til]$/', $palavra))
+            $palavra .= 'es'; elseif (preg_match('/[^aeiou]y$/', $palavra)) :
+            $palavra = substr_replace($palavra, 'ies', -1); elseif (preg_match('/[x]$/', $palavra)) :
+            $palavra = $palavra; elseif (preg_match('/[m]$/', $palavra)) :
+            $palavra = substr_replace($palavra, 'ns', -1); elseif ((preg_match('/[til]$/', $palavra))
                                 || (preg_match('/[ssil]$/', $palavra))
                             ) :
-			$palavra = substr_replace($palavra, 'eis', -2);
-        elseif (preg_match('/[il]$/', $palavra)) :
-			$palavra = substr_replace($palavra, 's', -1);
-        elseif (preg_match('/[l]$/', $palavra)) :
-			$palavra = substr_replace($palavra, 'is', -1);
-        elseif (preg_match('/[rnsz]$/', $palavra)) :
-			$palavra .= 'es';
-        else :
-			$palavra .= 's';
+            $palavra = substr_replace($palavra, 'eis', -2); elseif (preg_match('/[il]$/', $palavra)) :
+            $palavra = substr_replace($palavra, 's', -1); elseif (preg_match('/[l]$/', $palavra)) :
+            $palavra = substr_replace($palavra, 'is', -1); elseif (preg_match('/[rnsz]$/', $palavra)) :
+            $palavra .= 'es'; else :
+            $palavra .= 's';
         endif;
 
-		return $palavra;
+        return $palavra;
     }
 
     public static function removeAcentos($string)
@@ -193,8 +172,7 @@ class Text
         if ($autoreturn) :
                 echo constant($constant);
 
-            return;
-        else :
+        return; else :
                 return constant($constant);
         endif;
     }
@@ -208,15 +186,14 @@ class Text
     {
         if (!is_null($link)) :
                 $valid = (strpos($link, 'http://') > 0);
-            if (!$valid) :
+        if (!$valid) :
                 $valid = (strpos($link, 'https://') > 0);
-            endif;
-            if (!$valid) :
+        endif;
+        if (!$valid) :
                 $link = 'http://'.$link;
-            endif;
+        endif;
 
-            return $link;
-        else :
+        return $link; else :
                 return;
         endif;
     }
@@ -224,23 +201,21 @@ class Text
     public static function mascara($string, $mascara = null)
     {
         if (!is_null($mascara)) :
-			$result = '';
-            $k = 0;
-            for ($i = 0; $i <= strlen($mascara) - 1; $i++) :
+            $result = '';
+        $k = 0;
+        for ($i = 0; $i <= strlen($mascara) - 1; $i++) :
                 if ($mascara[$i] == '#') :
                     if (isset($string[$k])) :
                         $result .= $string[$k++];
-                    endif;
-                else :
+        endif; else :
                     if (isset($mascara[$i])) :
                         $result .= $mascara[$i];
-                    endif;
-                endif;
-            endfor;
+        endif;
+        endif;
+        endfor;
 
-            return $result;
-        else :
-			throw new Exception('[Error '.__METHOD__.'] Mascara nao informada');
+        return $result; else :
+            throw new Exception('[Error '.__METHOD__.'] Mascara nao informada');
         endif;
     }
 }

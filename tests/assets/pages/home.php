@@ -1,4 +1,5 @@
 <?php
-class HomeController{
-	
+
+class HomeController
+{
 }

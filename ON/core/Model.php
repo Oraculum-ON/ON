@@ -28,32 +28,30 @@ class Model
     {
         if ((!is_null($model))) :
             $model = strtolower($model);
-            $modelfile = MODEL_DIR.'/'.$model.'.php';
-            if (file_exists($modelfile)) :
-                include $modelfile;
-            else :
+        $modelfile = MODEL_DIR.'/'.$model.'.php';
+        if (file_exists($modelfile)) :
+                include $modelfile; else :
                 throw new Exception('[Error '.__METHOD__.'] Modelo nao encontrado ('.$modelfile.') ');
-            endif;
-            if ($this->dsntype == 1) :
+        endif;
+        if ($this->dsntype == 1) :
                 $dsn = preg_split('[://|:|@|/]', $this->dsn);
-                $this->driver = strtolower($dsn[0]);
-                if ($this->driver == 'sqlite') :
+        $this->driver = strtolower($dsn[0]);
+        if ($this->driver == 'sqlite') :
                     $this->user = '';
-                    $this->pass = '';
-                    $this->host = '';
-                    $this->database = $dsn[2];
-                    $this->driveroptions = null;
-                else :
+        $this->pass = '';
+        $this->host = '';
+        $this->database = $dsn[2];
+        $this->driveroptions = null; else :
                     $this->user = $dsn[1];
-                    $this->pass = $dsn[2];
-                    $this->host = $dsn[3];
-                    $this->database = $dsn[4];
-                    $this->driveroptions = isset($dsn[5]) ? $dsn[5] : null;
-                    $this->dsn = $this->driver.
+        $this->pass = $dsn[2];
+        $this->host = $dsn[3];
+        $this->database = $dsn[4];
+        $this->driveroptions = isset($dsn[5]) ? $dsn[5] : null;
+        $this->dsn = $this->driver.
                     ':host='.$this->host.';dbname='.$this->database;
-                endif;
-            endif;
-            $this->model = $model;
+        endif;
+        endif;
+        $this->model = $model;
         endif;
         if ((!isset(self::$connection)) || (!is_null(self::$connection))) :
             $this->PDO();
@@ -71,28 +69,28 @@ class Model
     {
         if (!is_null($model)) :
             $model = strtolower($model);
-            $class = ucwords($model);
-            $modelfile = MODEL_DIR.'/tables/'.$model.'.php';
-            if (file_exists($modelfile)) :
-                include $modelfile;
-            else :
+        $class = ucwords($model);
+        $modelfile = MODEL_DIR.'/tables/'.$model.'.php';
+        if (file_exists($modelfile)) :
+                include $modelfile; else :
                 $class = ucwords($model);
-                if (!class_exists($class)) :
+        if (!class_exists($class)) :
                     $eval = 'namespace Oraculum\Tables;';
-                    $eval .= 'use Oraculum\ActiveRecord;';
-                    $eval .= ' class '.$class.' extends ActiveRecord {';
-                    $eval .= ' public function __construct(){';
-                    $eval .= '     parent::__construct(get_class($this))';
-                    $eval .= '     ->setKey(array(\''.$key.'\'));';
-                    $eval .= ' }';
-                    $eval .= '}';
-                    eval($eval);
-                endif;
-            endif;
-            return true;
-        else :
+        $eval .= 'use Oraculum\ActiveRecord;';
+        $eval .= ' class '.$class.' extends ActiveRecord {';
+        $eval .= ' public function __construct(){';
+        $eval .= '     parent::__construct(get_class($this))';
+        $eval .= '     ->setKey(array(\''.$key.'\'));';
+        $eval .= ' }';
+        $eval .= '}';
+        eval($eval);
+        endif;
+        endif;
+
+        return true; else :
             throw new Exception('[Error '.__METHOD__.'] Modelo nao informado ('.$model.') ');
         endif;
+
         return $this;
     }
 
@@ -108,11 +106,9 @@ class Model
                     throw new Exception('[Error '.__METHOD__.'] PDO Connection Error: '.$e->getMessage());
                 }
 
-                return self::$connection;
-            else :
+        return self::$connection; else :
                 throw new Exception('[Error '.__METHOD__.'] Nao ha driver disponivel para \''.$this->driver.'\'');
-            endif;
-        else :
+        endif; else :
             throw new Exception('[Error '.__METHOD__.'] Extensao PDO nao carregada');
         endif;
     }
@@ -121,34 +117,30 @@ class Model
     {
         if ($table == 'all') :
             if ($this->driver == 'sqlite') :
-                $tables = self::$connection->query('SELECT name FROM sqlite_master WHERE type=\'table\';')->fetchAll();
-            else :
+                $tables = self::$connection->query('SELECT name FROM sqlite_master WHERE type=\'table\';')->fetchAll(); else :
                 $tables = self::$connection->query('SHOW TABLES')->fetchAll();
-            endif;
-            foreach ($tables as $table) :
+        endif;
+        foreach ($tables as $table) :
                 $this->generateAR($table[0], $create);
-            endforeach;
-        else :
+        endforeach; else :
             $table = strtolower($table);
-            $classear = ucwords($table);
-            $class = 'class '.$classear." extends Oraculum\ActiveRecord{\n";
-            $class .= "\tpublic function __construct(){\n";
-            $class .= "\t\tparent::__construct(get_class(\$this));\n";
-            $class .= "\t}\n";
-            $class .= "}\n";
-            if ($create) :
-                eval($class);
-            else :
+        $classear = ucwords($table);
+        $class = 'class '.$classear." extends Oraculum\ActiveRecord{\n";
+        $class .= "\tpublic function __construct(){\n";
+        $class .= "\t\tparent::__construct(get_class(\$this));\n";
+        $class .= "\t}\n";
+        $class .= "}\n";
+        if ($create) :
+                eval($class); else :
                 return "<?php \n".$class;
-            endif;
+        endif;
         endif;
     }
 
     public function getTable($table = null)
     {
         if (is_null($table)) :
-            throw new Exception('[Error '.__METHOD__.'] Tabela nao informada');
-        else :
+            throw new Exception('[Error '.__METHOD__.'] Tabela nao informada'); else :
             return $this->loadTable($table);
         endif;
     }
@@ -156,24 +148,22 @@ class Model
     public function setDsn($dsn = null)
     {
         if (is_null($dsn)) :
-            throw new Exception('[Error '.__METHOD__.'] DSN nao informado');
-        else :
+            throw new Exception('[Error '.__METHOD__.'] DSN nao informado'); else :
             $this->dsn = $dsn;
-            $dsn = preg_split('[://|:|@|/]', $this->dsn);
-            $this->driver = strtolower($dsn[0]);
-            if ($this->driver == 'sqlite') :
+        $dsn = preg_split('[://|:|@|/]', $this->dsn);
+        $this->driver = strtolower($dsn[0]);
+        if ($this->driver == 'sqlite') :
                 $this->user = '';
-                $this->pass = '';
-                $this->host = '';
-                $this->database = $dsn[1];
-                $this->driveroptions = null;
-            else :
+        $this->pass = '';
+        $this->host = '';
+        $this->database = $dsn[1];
+        $this->driveroptions = null; else :
                 $this->user = $dsn[1];
-                $this->pass = $dsn[2];
-                $this->host = $dsn[3];
-                $this->database = $dsn[4];
-                $this->driveroptions = isset($dsn[5]) ? $dsn[5] : null;
-            endif;
+        $this->pass = $dsn[2];
+        $this->host = $dsn[3];
+        $this->database = $dsn[4];
+        $this->driveroptions = isset($dsn[5]) ? $dsn[5] : null;
+        endif;
         endif;
     }
 
@@ -181,10 +171,11 @@ class Model
     {
         return $this->model;
     }
+
     public static function execSQL($sql, $debug = false)
     {
         if ($debug) :
-            echo '<br />SQL: <pre>' . $sql . '</pre>';
+            echo '<br />SQL: <pre>'.$sql.'</pre>';
         endif;
 
         try {
@@ -220,7 +211,8 @@ class Model
 
     public function getResult($query, $debug = false)
     {
-        $rows=$this->execSQL($query, $debug);
+        $rows = $this->execSQL($query, $debug);
+
         return $this->fetch($rows);
     }
 

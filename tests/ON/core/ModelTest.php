@@ -1,182 +1,186 @@
 <?php
+
 use Oraculum\Model;
 use PHPUnit\Framework\TestCase;
+
 class ModelTest extends TestCase
 {
     /**
-	 * @runInSeparateProcess
-	 */
+     * @runInSeparateProcess
+     */
     public function testConstruct()
     {
         define('MODEL_DIR', 'tests/assets/models');
         $result = new Model('sqlite');
-		$this->assertInstanceOf(Oraculum\Model::class, $result);
+        $this->assertInstanceOf(Oraculum\Model::class, $result);
     }
+
     /**
-	 * @runInSeparateProcess
-	 */
+     * @runInSeparateProcess
+     */
     public function testConstructError1()
     {
         $this->expectException('Oraculum\Exception');
         define('MODEL_DIR', 'tests/assets/models');
         $result = new Model('not-found');
     }
-    
+
     /**
-	 * @runInSeparateProcess
-	 */
+     * @runInSeparateProcess
+     */
     public function testLoadModelError1()
     {
         $this->expectException('Oraculum\Exception');
         define('MODEL_DIR', 'tests/assets/models');
-        $db=new Model();
-        $result=$db->loadModel('sqlite2');
+        $db = new Model();
+        $result = $db->loadModel('sqlite2');
     }
+
     /**
-	 * @runInSeparateProcess
-	 */
+     * @runInSeparateProcess
+     */
     public function testLoadModelError2()
     {
         $this->expectException('Oraculum\Exception');
         define('MODEL_DIR', 'tests/assets/models');
-        $db=new Model();
-        $result=$db->loadModel('sqlite3');
+        $db = new Model();
+        $result = $db->loadModel('sqlite3');
     }
-	
+
     /**
-	 * @runInSeparateProcess
-	 */
+     * @runInSeparateProcess
+     */
     public function testLoadTable()
     {
         define('MODEL_DIR', 'tests/assets/models');
         $db = new Model('sqlite');
-		$result=$db->getTable('teste');
-		$this->assertTrue($result);
+        $result = $db->getTable('teste');
+        $this->assertTrue($result);
     }
+
     /**
-	 * @runInSeparateProcess
-	 */
+     * @runInSeparateProcess
+     */
     public function testGetTableError()
     {
         $this->expectException('Oraculum\Exception');
         define('MODEL_DIR', 'tests/assets/models');
-        $db=new Model('sqlite');
-		$db->getTable();
+        $db = new Model('sqlite');
+        $db->getTable();
     }
-	
-	
+
     /**
-	 * @runInSeparateProcess
-	 */
+     * @runInSeparateProcess
+     */
     /*public function testLoadDynamicModelClassError()
     {
         $this->expectException('Oraculum\Exception');
         define('MODEL_DIR', 'tests/assets/models');
         $db = new Models('sqlite');
-		$result=$db->loadDynamicModelClass();
-		$this->assertTrue($result);
+        $result=$db->loadDynamicModelClass();
+        $this->assertTrue($result);
     }*/
-    
 
     /**
-	 * @runInSeparateProcess
-	 */
+     * @runInSeparateProcess
+     */
     public function testCloseModel()
     {
         $result = Model::closeModel();
         $this->assertNull($result);
     }
-	
+
     /**
-	 * @runInSeparateProcess
-	 */
+     * @runInSeparateProcess
+     */
     public function testSetDSNError()
     {
         $this->expectException('Oraculum\Exception');
         define('MODEL_DIR', 'tests/assets/models');
         $db = new Model('sqlite');
-		$result=$db->setDsn();
+        $result = $db->setDsn();
     }
-	
+
     /**
-	 * @runInSeparateProcess
-	 */
+     * @runInSeparateProcess
+     */
     public function testSetDSN()
     {
         define('MODEL_DIR', 'tests/assets/models');
         $db = new Model('sqlite');
-		$result=$db->setDsn('sqlite://tests/assets/models/teste.sqlite@/');
+        $result = $db->setDsn('sqlite://tests/assets/models/teste.sqlite@/');
         $this->assertNull($result);
 
-		$result=$db->setDsn('sqlite2://tests/assets/models/teste.sqlite@/');
+        $result = $db->setDsn('sqlite2://tests/assets/models/teste.sqlite@/');
         $this->assertNull($result);
     }
-	
+
     /**
-	 * @runInSeparateProcess
-	 */
+     * @runInSeparateProcess
+     */
     public function testGetModelName()
     {
         define('MODEL_DIR', 'tests/assets/models');
         $db = new Model('sqlite');
-		$result=$db->getModelName();
+        $result = $db->getModelName();
         $this->assertEquals('sqlite', $result);
     }
-	
+
     /**
-	 * @runInSeparateProcess
-	 */
+     * @runInSeparateProcess
+     */
     public function testGenerateAR()
     {
         define('MODEL_DIR', 'tests/assets/models');
         $db = new Model('sqlite');
-		$result=$db->generateAR('teste');
+        $result = $db->generateAR('teste');
         $this->assertNull($result);
     }
+
     /**
-	 * @runInSeparateProcess
-	 */
+     * @runInSeparateProcess
+     */
     public function testGenerateARError()
     {
         $this->expectException('Oraculum\Exception');
         define('MODEL_DIR', 'tests/assets/models');
-        $db=new Model();
+        $db = new Model();
         $db->loadModel('sqlite3');
-		$db->generateAR();
-		//$this->assertInstanceOf(ON\Models::class, $result);
+        $db->generateAR();
+        //$this->assertInstanceOf(ON\Models::class, $result);
     }
 
     /**
-	 * @runInSeparateProcess
-	 */
+     * @runInSeparateProcess
+     */
     public function testGeneratorARReturn()
     {
         define('MODEL_DIR', 'tests/assets/models');
         $db = new Model('sqlite');
-		$result=$db->generateAR('teste', false);
-		$class="<"."?"."php \nclass Teste extends Oraculum\ActiveRecord{\n\tpublic function __construct(){\n\t\tparent::__construct(get_class(\$this));\n\t}\n}\n";
+        $result = $db->generateAR('teste', false);
+        $class = '<'.'?'."php \nclass Teste extends Oraculum\ActiveRecord{\n\tpublic function __construct(){\n\t\tparent::__construct(get_class(\$this));\n\t}\n}\n";
         $this->assertEquals($class, $result);
     }
-	
+
     /**
-	 * @runInSeparateProcess
-	 */
+     * @runInSeparateProcess
+     */
     public function testGeneratorARAll()
     {
         define('MODEL_DIR', 'tests/assets/models');
         $db = new Model('sqlite');
-		$result=$db->generateAR();
+        $result = $db->generateAR();
         $this->assertNull($result);
     }
-	
+
     /**
-	 * @runInSeparateProcess
-	 */
+     * @runInSeparateProcess
+     */
     public function testGeneratorARAll2()
     {
         $this->expectException('Oraculum\Exception');
         define('MODEL_DIR', 'tests/assets/models');
         $db = new Model('teste');
-		$result=$db->generateAR();
+        $result = $db->generateAR();
     }
 }

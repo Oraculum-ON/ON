@@ -31,8 +31,7 @@ class Register
     {
         $instance = self::getInstance();
         if (isset($instance->vars[$index])) :
-            return $instance->vars[$index];
-        else :
+            return $instance->vars[$index]; else :
             return;
         endif;
     }
