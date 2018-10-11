@@ -61,8 +61,7 @@ class App
     public function setModelDir($dir)
     {
         if (file_exists($dir)) :
-            define('MODEL_DIR', $dir);
-        else :
+            define('MODEL_DIR', $dir); else :
             throw new Exception('[Error '.__METHOD__.'] Diretorio nao encontrado ('.$dir.')');
         endif;
     }
@@ -76,8 +75,7 @@ class App
     {
         if ((defined('ON_DEBUG')) && (ON_DEBUG)) :
             Exception::displayErrors();
-            Exception::start();
-        else :
+        Exception::start(); else :
             ini_set('display_errors', false);
         endif;
     }

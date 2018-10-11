@@ -26,21 +26,17 @@ class CliApp
         $cmd = (is_array($argv) ? $argv : []);
         if (isset($cmd[1])) :
                 $method = strtolower($cmd[1]);
-            if (isset($cmd[2])) :
+        if (isset($cmd[2])) :
                     $par = $cmd[2];
-            endif;
-            if (isset($this->methods[$method])) :
+        endif;
+        if (isset($this->methods[$method])) :
                 if (isset($par)) :
-                    return $this->methods[$method]($par);
-                else :
+                    return $this->methods[$method]($par); else :
                     return $this->methods[$method]();
-                endif;
-            elseif ($method == 'help') :
-                return $this->help();
-            else :
+        endif; elseif ($method == 'help') :
+                return $this->help(); else :
                 return $this->errortext;
-            endif;
-        else :
+        endif; else :
             return $this->defaulttext;
         endif;
     }
@@ -65,20 +61,20 @@ class CliApp
         $help = 'Metodos disponiveis:'."\n\t";
         foreach ($this->methods as $metodo => $funcao) :
                 $len = strlen($metodo);
-            if ($len > $maxlen) :
+        if ($len > $maxlen) :
                 $maxlen = $len;
-            endif;
+        endif;
         endforeach;
-		if (isset($this->infos)):
-			foreach ($this->infos as $metodo => $info) :
-					$help .= '- '.$metodo;
-				if (!is_null($info)) :
-						$help .= str_repeat('.', ($maxlen - strlen($metodo)));
-					$help .= ': '.$info;
-				endif;
-				$help .= "\n\t";
-			endforeach;
-		endif;
+        if (isset($this->infos)):
+            foreach ($this->infos as $metodo => $info) :
+                    $help .= '- '.$metodo;
+        if (!is_null($info)) :
+                        $help .= str_repeat('.', ($maxlen - strlen($metodo)));
+        $help .= ': '.$info;
+        endif;
+        $help .= "\n\t";
+        endforeach;
+        endif;
 
         return $help;
     }

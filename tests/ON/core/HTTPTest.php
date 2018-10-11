@@ -2,24 +2,25 @@
     use Oraculum\Http;
 use PHPUnit\Framework\TestCase;
 
-class HttpTest extends TestCase
+class HTTPTest extends TestCase
 {
     /**
      * @runInSeparateProcess
      */
-	public function testRedirect()
-	{
-		$result = Http::redirect('testRedirect');
-		$this->assertContains('Location: testRedirect', xdebug_get_headers());
-	}
+    public function testRedirect()
+    {
+        $result = Http::redirect('testRedirect');
+        $this->assertContains('Location: testRedirect', xdebug_get_headers());
+    }
+
     /**
      * @runInSeparateProcess
      */
-	public function testRedirectNull()
-	{
-		$result = Http::redirect(null);
-		$this->assertNull($result);
-	}
+    public function testRedirectNull()
+    {
+        $result = Http::redirect(null);
+        $this->assertNull($result);
+    }
 
     public function testIp()
     {
@@ -34,7 +35,7 @@ class HttpTest extends TestCase
         $result = Http::host();
         $this->assertEquals($_SERVER['REMOTE_HOST'], $result);
     }
-	
+
     public function testHostNull()
     {
         $_SERVER['REMOTE_ADDR'] = 'testIP';

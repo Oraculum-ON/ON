@@ -16,10 +16,10 @@ class ActiveRecord extends Model
                             'mediumint',
                             'bigint',
                             'bit',
-                            'timestamp'];
+                            'timestamp', ];
     protected $floatFields = ['float',
                               'decimal',
-                              'double'];
+                              'double', ];
     protected $types = ['bigint', 'binary', 'bit', 'blob', 'boolean',
                                 'char', 'date', 'datetime', 'decimal',
                                 'double', 'enum', 'float', 'geometry',
@@ -36,12 +36,11 @@ class ActiveRecord extends Model
     {
         if (!is_null($class)) :
             $this->className = $class;
-            if (strpos($class, '\\')) :
+        if (strpos($class, '\\')) :
                 $table = explode('\\', $class);
-                $this->tableName = strtolower($table[count($table) - 1]);
-            else :
+        $this->tableName = strtolower($table[count($table) - 1]); else :
                 $this->tableName = $table;
-            endif;
+        endif;
         endif;
 
         return $this;
@@ -72,9 +71,9 @@ class ActiveRecord extends Model
         endif;
         if ($limit > 0) :
             $query .= ' LIMIT '.$limit;
-            if ($offset > 0) :
+        if ($offset > 0) :
                 $query .= ' OFFSET '.$offset;
-            endif;
+        endif;
         endif;
 
         return $this->getResult($query);
@@ -85,7 +84,7 @@ class ActiveRecord extends Model
         $this->updateKeyValue();
         $rows = $this->getAll(1, 0, $this->key[0]);
 
-        return ((count($rows) > 0) ? $rows[0] : null);
+        return (count($rows) > 0) ? $rows[0] : null;
     }
 
     public function getLast()
@@ -93,14 +92,13 @@ class ActiveRecord extends Model
         $this->updateKeyValue();
         $rows = $this->getAll(1, 0, $this->key[0], 'DESC');
 
-        return ((count($rows) > 0)? $rows[0] : null);
+        return (count($rows) > 0) ? $rows[0] : null;
     }
 
     private function getByTableField($field, $value, $type = '%u')
     {
         if (count($this->filterQuery) > 0) :
-            $filter = ' AND '.implode(' AND ', $this->filterQuery);
-        else :
+            $filter = ' AND '.implode(' AND ', $this->filterQuery); else :
             $filter = '';
         endif;
         $query = sprintf(
@@ -112,8 +110,8 @@ class ActiveRecord extends Model
             $this->secsql($value)
         );
         $rows = $this->getResult($query);
-        
-        return ((count($rows) > 0)? $rows[0] : null);
+
+        return (count($rows) > 0) ? $rows[0] : null;
     }
 
     private function getAllByTableField($field, $value, $type = '%u', $limit = null, $offset = null)
@@ -124,22 +122,21 @@ class ActiveRecord extends Model
         $sqllimit = null;
         if ($limit > 0) :
             $sqllimit = 'LIMIT '.$limit;
-            if ($offset > 0) :
+        if ($offset > 0) :
                 $sqllimit .= ' OFFSET '.$offset;
-            endif;
+        endif;
         endif;
         if (count($this->filterQuery) > 0) :
             $filter .= ' AND '.implode(' AND ', $this->filterQuery);
         endif;
         if (is_array($value)) :
             $value = 'IN ('.implode(',', $value).')';
-            $query = sprintf(
+        $query = sprintf(
                 'SELECT * '.
                              '  FROM '.$this->tableName.
                              ' WHERE '.$field.' '.$type.' '.$sqllimit,
                 $this->secsql($value)
-            );
-        else :
+            ); else :
             if (stripos($value, '%') !== false) :
                 $query = sprintf(
                     'SELECT * '.
@@ -148,8 +145,7 @@ class ActiveRecord extends Model
                                  ' '.$filter.
                                  ' '.$sqllimit,
                     $this->secsql($value)
-                );
-            else :
+                ); else :
                 $query = sprintf(
                     'SELECT * '.
                                  '  FROM '.$this->tableName.
@@ -158,7 +154,7 @@ class ActiveRecord extends Model
                                  ' '.$sqllimit,
                     $this->secsql($value)
                 );
-            endif;
+        endif;
         endif;
 
         return $this->getResult($query);
@@ -167,8 +163,7 @@ class ActiveRecord extends Model
     private function filterByTableField($field, $value, $type = '%u')
     {
         if ($type == '%u') :
-            $this->filterQuery[] = sprintf(''.$field.'='.$type.'', $this->secsql($value));
-        else :
+            $this->filterQuery[] = sprintf(''.$field.'='.$type.'', $this->secsql($value)); else :
             $this->filterQuery[] = sprintf(''.$field.'="'.$type.'"', $this->secsql($value));
         endif;
 
@@ -178,8 +173,7 @@ class ActiveRecord extends Model
     public function __set($name, $value)
     {
         if (!is_null($value)) :
-            $this->fields[$name] = $value;
-        else :
+            $this->fields[$name] = $value; else :
             $this->fields[$name] = null;
         endif;
     }
@@ -187,8 +181,7 @@ class ActiveRecord extends Model
     public function __get($name)
     {
         if (array_key_exists($name, $this->fields)) :
-            return $this->fields[$name];
-        else :
+            return $this->fields[$name]; else :
             throw new Exception('[Erro CGAR168] Campo \''.$name.'\' inexistente');
         endif;
     }
@@ -197,32 +190,25 @@ class ActiveRecord extends Model
     {
         $value = (isset($values[0])) ? $values[0] : null;
         if (isset($values[1])) :
-            $type = $values[1];
-        else :
+            $type = $values[1]; else :
             $type = ((gettype($value) == 'integer') ? '%u' : '%s');
         endif;
-        
+
         if (stripos($name, 'getBy') !== false) :
             $field = strtolower(str_replace('getBy', '', $name));
 
-            return $this->getByTableField($field, $value, $type);
-        
-        elseif (stripos($name, 'getAllBy') !== false) :
+        return $this->getByTableField($field, $value, $type); elseif (stripos($name, 'getAllBy') !== false) :
                 $field = strtolower(str_replace('getAllBy', '', $name));
-                $limit = (isset($values[2])) ? $values[2] : null;
-                $offset = (isset($values[3])) ? $values[3] : null;
+        $limit = (isset($values[2])) ? $values[2] : null;
+        $offset = (isset($values[3])) ? $values[3] : null;
 
-                return $this->getAllByTableField($field, $value, $type, $limit, $offset);
-        
-        elseif (stripos($name, 'filterBy') !== false) :
+        return $this->getAllByTableField($field, $value, $type, $limit, $offset); elseif (stripos($name, 'filterBy') !== false) :
             $field = strtolower(str_replace('filterBy', '', $name));
-            if (!is_null($value)) :
-        
-                return $this->filterByTableField($field, $value, $type);
-        
-            else :
+        if (!is_null($value)) :
+
+                return $this->filterByTableField($field, $value, $type); else :
                 return $this;
-            endif;
+        endif;
         endif;
     }
 
@@ -231,15 +217,15 @@ class ActiveRecord extends Model
         $return = [];
         foreach ($rows as $row) :
             $obj = new self($this->className);
-            if (!empty($this->key)) :
+        if (!empty($this->key)) :
                 $obj->setKey($this->key);
-            endif;
-            foreach ($row as $field => $value) :
+        endif;
+        foreach ($row as $field => $value) :
                 if (!is_int($field)) :
                     $obj->$field = $value;
-                endif;
-            endforeach;
-            $return[] = clone $obj;
+        endif;
+        endforeach;
+        $return[] = clone $obj;
         endforeach;
 
         return $return;
@@ -253,16 +239,15 @@ class ActiveRecord extends Model
         if (count($this->fields) > 0) :
             foreach ($this->fields as $field => $value) :
                 if (is_null($values)) :
-                    $eval .= '(';
-                else :
+                    $eval .= '('; else :
                     $eval .= ',';
-                    $values .= ',';
-                    $fields .= ',';
-                endif;
-                    $eval .= $field;
-                    $values .= '"%s"';
-                    $fields .= '$this->secsql($this->'.$field.')';
-            endforeach;
+        $values .= ',';
+        $fields .= ',';
+        endif;
+        $eval .= $field;
+        $values .= '"%s"';
+        $fields .= '$this->secsql($this->'.$field.')';
+        endforeach;
         endif;
         $eval .= ')';
         $eval .= ' VALUES ('.$values.')\','.$fields.');';
@@ -284,15 +269,14 @@ class ActiveRecord extends Model
             foreach ($this->fields as $field => $value) :
                 if (!is_null($fields)) :
                     $eval .= ',';
-                endif;
-                if (is_null($value)) :
+        endif;
+        if (is_null($value)) :
                     $eval .= $field.'=NULL ';
-                    $fields .= '';
-                else :
+        $fields .= ''; else :
                     $eval .= $field.'="%s" ';
-                    $fields .= '$this->secsql($this->'.$field.'),';
-                endif;
-            endforeach;
+        $fields .= '$this->secsql($this->'.$field.'),';
+        endif;
+        endforeach;
         endif;
         $eval .= 'WHERE '.$this->key[0].'="%u"';
         $fields .= '$this->secsql('.$this->keyvalue[0].')';
@@ -331,12 +315,10 @@ class ActiveRecord extends Model
         endif;
         if ($valid) :
             $this->updateKeyValue();
-            if (!empty($this->keyvalue)) :
-                return $this->update($debug);
-            else :
+        if (!empty($this->keyvalue)) :
+                return $this->update($debug); else :
                 return $this->insert($debug);
-            endif;
-        else :
+        endif; else :
             return false;
         endif;
     }
@@ -353,15 +335,14 @@ class ActiveRecord extends Model
         foreach ($this->key as $key) :
             if (isset($this->fields[$key])) :
                 $this->keyvalue[] = $this->fields[$key];
-            endif;
+        endif;
         endforeach;
     }
 
     private function getKeyValue($index = null)
     {
         if (!is_null($index)) :
-            return $this->keyvalue[$index];
-        else :
+            return $this->keyvalue[$index]; else :
             return $this->keyvalue;
         endif;
     }
@@ -383,39 +364,40 @@ class ActiveRecord extends Model
         $fields = self::$connection->query('DESC '.$this->tableName)->fetchAll();
         foreach ($fields as $dbField) :
             $realfieldlist[] = $dbField['Field'];
-            if (!$this->validateField($dbField)) :
-        
+        if (!$this->validateField($dbField)) :
+
                 if ($exception) :
                     throw new Exception($this->validateMsg);
-                    return false;
-                endif;
-            endif;
+        return false;
+        endif;
+        endif;
         endforeach;
 
         foreach ($this->fields as $field => $value) :
             if (!in_array($field, $realfieldlist)) :
                 $this->validateMsg = 'Campo \''.$field.'\' n&atilde;o encontrado na entidade \''.$this->tableName.'\'';
-        
-                if ($exception) :
+
+        if ($exception) :
                     throw new Exception($this->validateMsg);
-                endif;
-                return false;
-            endif;
+        endif;
+
+        return false;
+        endif;
         endforeach;
 
         return true;
     }
-    
+
     private function validateField($dbField)
     {
         return $this->validateNotNulls($dbField);
-        
+
         /* if ($field['Key']=='MUL'):
         Por motivo de desempenho, a validacao de chave estrangeira deve ser realizada
         pelo proprio banco e apenas tratada a excessao, e nao pela linguagem para evitar
         verificacoes desnecessarias que ja sao tratadas pelos gerenciadores de banco de dados */
     }
-    
+
     private function validateNotNulls($dbField)
     {
         $empty = ((!isset($this->fields[$dbField['Field']])) ||
@@ -426,9 +408,9 @@ class ActiveRecord extends Model
                 ($dbField['Default'] == '') &&
                 (($dbField['Null'] == 'NO'))) :
                 $this->validateMsg = 'Campo \''.$dbField['Field'].'\' n&atilde;o foi preenchido';
-                return false;
-            endif;
-        else :
+
+        return false;
+        endif; else :
             $this->convertType($dbField);
         endif;
 
@@ -441,17 +423,16 @@ class ActiveRecord extends Model
         $types = '['.implode('|', $this->types).']';
         preg_match($types, $dbField['Type'], $type);
         if ($type[0] != 'enum') :
-            preg_match('/[0-9]+/', $dbField['Type'], $size);
-        else :
+            preg_match('/[0-9]+/', $dbField['Type'], $size); else :
             $size[0] = 0;
         endif;
         switch ($type) :
-            case (in_array($type, $this->intFields)):
+            case in_array($type, $this->intFields):
                 $this->fields[$dbField['Field']] = (int) $this->fields[$dbField['Field']];
-                break;
-            case (in_array($type, $this->floatFields)):
+        break;
+        case in_array($type, $this->floatFields):
                 $this->fields[$dbField['Field']] = (float) $this->fields[$dbField['Field']];
-                break;
+        break;
         endswitch;
         $this->convertSize($dbField, $size);
     }
@@ -462,7 +443,7 @@ class ActiveRecord extends Model
         if ((isset($size)) && ($size > 0)) :
             if ((strlen($this->fields[$dbField['Field']])) > $size) :
                 $this->fields[$dbField['Field']] = substr($this->fields[$dbField['Field']], 0, $size);
-            endif;
+        endif;
         endif;
     }
 }

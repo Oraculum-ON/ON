@@ -28,7 +28,7 @@ class Auth
 
     public function __construct()
     {
-		$url = ((defined('URL')) ? URL : '/');
+        $url = ((defined('URL')) ? URL : '/');
         $this->logoffUrl = $url.'logoff';
         $this->loginUrl = $url.'login';
     }
@@ -62,23 +62,21 @@ class Auth
     {
         Request::initSess();
         $user = Request::getSess($this->sessName);
-        if (!is_null($user)) : 
+        if (!is_null($user)) :
             $ip = Crypt::strDecrypt($user['ip']);
-            if ($ip != Http::ip()) :
+        if ($ip != Http::ip()) :
                 if ($redirect) :
                     Http::redirect($this->logoffUrl);
-                endif;
+        endif;
 
-                return false;
-            else :
+        return false; else :
                 return true;
-            endif;
-        else :
+        endif; else :
             if ($redirect) :
                 Http::redirect($this->logoffUrl);
-            endif;
+        endif;
 
-            return false;
+        return false;
         endif;
     }
 
@@ -89,7 +87,7 @@ class Auth
         $_SESSION = [];
         session_destroy();
         session_regenerate_id(true);
-		$url = ((defined('URL')) ? URL : '/');
+        $url = ((defined('URL')) ? URL : '/');
         Http::redirect($url);
         exit;
     }
@@ -189,65 +187,57 @@ class Auth
     public function dbAuth()
     {
         $found = false;
-        if ((is_object($this->dbObj))&&
+        if ((is_object($this->dbObj)) &&
             (!empty($this->userFields))) :
             $obj = $this->dbObj;
-            foreach ($this->userFields as $userField):
+        foreach ($this->userFields as $userField):
                 $filter = 'getBy'.ucwords($userField);
-                $reg = $obj->$filter($this->user);
-                $found=(count($reg) == 1);
-                if ($found) :
+        $reg = $obj->$filter($this->user);
+        $found = (count($reg) == 1);
+        if ($found) :
                     break 1;
-                endif;
-            endforeach;
-            $passwordfield = $this->passwordField;
-            $keyField = $this->keyField;
-            if ($found) :
-                if ((!is_null($this->statusField)&&
+        endif;
+        endforeach;
+        $passwordfield = $this->passwordField;
+        $keyField = $this->keyField;
+        if ($found) :
+                if ((!is_null($this->statusField) &&
                     (!is_null($this->statusValue)))):
                         $statusField = $this->statusField;
-                    if ($reg->$statusField != $this->statusValue):
+        if ($reg->$statusField != $this->statusValue):
                         return false;
-                    endif;
-                endif;
-                if ($this->cryptType == 'md5') :
+        endif;
+        endif;
+        if ($this->cryptType == 'md5') :
                     if ($reg->$passwordfield == md5($this->password)) :
                         $this->key = $reg->$keyField;
-                        $this->register = $reg;
+        $this->register = $reg;
 
-                        return true;
-                    else :
+        return true; else :
                         return false;
-                    endif;
-                elseif ($this->cryptType == 'sha1') :
+        endif; elseif ($this->cryptType == 'sha1') :
                     if ($register->$passwordfield == sha1($this->password)) :
                         $this->key = $reg->$keyField;
-                        $this->register = $reg;
+        $this->register = $reg;
 
-                        return true;
-                    else :
+        return true; else :
                         return false;
-                    endif;
-                elseif ($this->cryptType == 'blowfish') :
+        endif; elseif ($this->cryptType == 'blowfish') :
                     if (Crypt::blowfishCheck($this->password, $reg->$passwordField)) :
                         $this->key = $reg->$keyField;
-                        $this->register = $reg;
+        $this->register = $reg;
 
-                        return true;
-                    else :
+        return true; else :
                         return false;
-                    endif;
-                else :
+        endif; else :
                     if ($register->$passwordField == $this->password) :
                         $this->key = $register->$keyField;
 
-                        return true;
-                    else :
+        return true; else :
                         return false;
-                    endif;
-                endif;
-            endif;
-        else :
+        endif;
+        endif;
+        endif; else :
             throw new Exception('Para autenticacao atraves de base de dados deve ser passada uma instancia relacionada a uma entidade do banco');
         endif;
     }
@@ -256,27 +246,25 @@ class Auth
     {
         if (is_object($this->dbObj)) :
             $cryptField = $this->cryptKeyField;
-            $getCryptField = 'getBy'.ucwords($this->cryptKeyField);
-            $keyField = $this->keyField;
-            $obj = $this->dbobj;
-            $this->register = $obj->$getCryptField($this->cryptKey);
-            if (count($this->register) == 1) :
+        $getCryptField = 'getBy'.ucwords($this->cryptKeyField);
+        $keyField = $this->keyField;
+        $obj = $this->dbobj;
+        $this->register = $obj->$getCryptField($this->cryptKey);
+        if (count($this->register) == 1) :
                 $this->key = $this->register->$keyField;
-                $key = Crypt::strDecrypt($this->cryptkey);
-                $key = explode('::', $key);
-                $time = $key[0];
-                $timeout = $key[2];
-                $auth = (time() < $time + $timeout);
-                if (($auth) && ($clearkey)) :
+        $key = Crypt::strDecrypt($this->cryptkey);
+        $key = explode('::', $key);
+        $time = $key[0];
+        $timeout = $key[2];
+        $auth = (time() < $time + $timeout);
+        if (($auth) && ($clearkey)) :
                         $this->register->$cryptField = null;
-                    $this->register->save();
-                endif;
+        $this->register->save();
+        endif;
 
-                return $auth;
-            else :
+        return $auth; else :
                 return false;
-            endif;
-        else :
+        endif; else :
             throw new Exception('Para autenticacao atraves de base de dados deve ser passada uma instancia relacionada a uma entidade do banco');
         endif;
     }
@@ -284,8 +272,7 @@ class Auth
     public function recordFields($fields = [])
     {
         if (is_array($fields)) :
-                $this->fields = $fields;
-        else :
+                $this->fields = $fields; else :
             throw new Exception('Campos que serao gravados em sessao devem ser informados em um vetor');
         endif;
     }
@@ -294,20 +281,19 @@ class Auth
     {
         if (!is_null($this->key)) :
             $obj = $this->register;
-            foreach ($this->fields as $field) :
+        foreach ($this->fields as $field) :
                 $user[$field] = Crypt::strCrypt($obj->$field);
-            endforeach;
-            $user['ip'] = Crypt::strCrypt(Http::ip());
-            $user['key'] = Crypt::strCrypt($this->key);
-            $user['user'] = Crypt::strCrypt($this->user);
-            Request::initSess();
-            Request::setSess($this->sessName, $user);
-            if ($redirect) :
+        endforeach;
+        $user['ip'] = Crypt::strCrypt(Http::ip());
+        $user['key'] = Crypt::strCrypt($this->key);
+        $user['user'] = Crypt::strCrypt($this->user);
+        Request::initSess();
+        Request::setSess($this->sessName, $user);
+        if ($redirect) :
                 Http::redirect($this->homeUrl);
-            endif;
+        endif;
 
-            return true;
-        else :
+        return true; else :
             return false;
         endif;
     }

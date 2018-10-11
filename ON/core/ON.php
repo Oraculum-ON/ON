@@ -2,7 +2,7 @@
 
 namespace Oraculum;
 
-class On
+class ON
 {
     private static $instance = null;
 

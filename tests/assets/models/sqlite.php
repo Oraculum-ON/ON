@@ -1,5 +1,6 @@
 <?php
-$this->dsntype=2;
+
+$this->dsntype = 2;
 $this->driver = 'sqlite';
 $this->user = '';
 $this->pass = '';

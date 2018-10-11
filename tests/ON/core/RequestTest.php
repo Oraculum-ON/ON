@@ -171,7 +171,7 @@ class RequestTest extends TestCase
      * @runInSeparateProcess
      */
     public function testCookie1()
-    {		
+    {
         $_COOKIE['testCookie1'] = 'Cookie1';
         $result = Request::getCookie('testCookie1');
         $this->assertEquals('Cookie1', $result);

@@ -1,4 +1,4 @@
 <?php
-	class ViewView{
-		
-	}
+    class ViewView
+    {
+    }
