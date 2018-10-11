@@ -3,7 +3,7 @@
     "description": "ON Framework, Simple MVC PHP Framework",
     "keywords": ["on","framework"],
     "homepage": "https://oraculum-on.github.io",
-    "license": "LGPL-3.0-only",
+    "license": "MIT",
     "authors": [
         {
             "name": "Patrick Kaminski",
