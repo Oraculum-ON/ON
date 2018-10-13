@@ -2,7 +2,7 @@
 
 namespace Oraculum;
 
-class HTTP
+class Http
 {
     // Redirecionar
     public static function redirect($url)
