@@ -48,9 +48,9 @@ class Alias
 
     public static function loadHttp()
     {
-        self::AddAlias('redirect', 'Oraculum\HTTP::redirect');
-        self::AddAlias('ip', 'Oraculum\HTTP::ip');
-        self::AddAlias('host', 'Oraculum\HTTP::host');
+        self::AddAlias('redirect', 'Oraculum\Http::redirect');
+        self::AddAlias('ip', 'Oraculum\Http::ip');
+        self::AddAlias('host', 'Oraculum\Http::host');
     }
 
     public static function loadAlias($class)
